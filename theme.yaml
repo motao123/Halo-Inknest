@@ -9,7 +9,7 @@ spec:
   author:
     name: motao
     website: https://lenghang.com
-  description: 一款为 Halo 2 打造的沉浸式内容博客主题，融合大图 Banner、卡片列表、侧滑栏和舒适阅读体验
+  description: 一款为 Halo 2 打造的沉浸式内容博客主题，融合大图 Banner、经典文章列表和舒适阅读体验
   logo: "/themes/theme-inknest/assets/images/screenshot.png"
   homepage: "https://github.com/motao123/Halo-Inknest"
   repo: "https://github.com/motao123/Halo-Inknest"

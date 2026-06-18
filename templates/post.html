@@ -4,11 +4,11 @@
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <div th:if="${theme.config.features.enable_reading_progress == null or theme.config.features.enable_reading_progress}" class="reading-progress" id="reading-progress"></div>
-  <th:block th:replace="~{modules/banner :: banner(title=${post.spec.title}, subtitle=${post.status.excerpt}, image=${(post.spec.cover ?: '') != '' ? post.spec.cover : theme.config.banner.post_banner})}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${post.spec.title}, subtitle=${post.status.excerpt}, image=${null})}"></th:block>
 
   <main class="site-main">
     <article class="post-single">
-      <div class="container" th:classappend="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'fixed'} ? ' layout-shell' : ''">
+      <div class="container container--narrow">
         <div class="content-shell post-content-shell">
           <header class="post-header">
             <div class="post-meta post-meta--single">
@@ -34,8 +34,6 @@
             <button type="button" data-share-current>复制链接</button>
           </div>
         </div>
-
-        <th:block th:if="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'fixed'}" th:replace="~{modules/sidebar :: sidebar(extraClass='site-sidebar--fixed')}"></th:block>
       </div>
     </article>
 

@@ -3,11 +3,11 @@
 <head th:replace="~{modules/head :: head(title='首页', description=${theme.config.basic.site_description})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
-  <th:block th:replace="~{modules/banner :: banner(title=${site.title}, subtitle=${theme.config.basic.site_description ?: site.subtitle}, image=${theme.config.banner.home_banner})}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${site.title}, subtitle=${theme.config.basic.site_description ?: site.subtitle}, image=${null})}"></th:block>
 
   <main class="site-main">
     <section class="section-posts">
-      <div class="container" th:classappend="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'fixed'} ? ' layout-shell' : ''">
+      <div class="container">
         <div class="content-shell">
           <header class="section-head">
             <div>
@@ -30,8 +30,6 @@
 
           <th:block th:replace="~{modules/pagination :: pagination(items=${posts})}"></th:block>
         </div>
-
-        <th:block th:if="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'fixed'}" th:replace="~{modules/sidebar :: sidebar(extraClass='site-sidebar--fixed')}"></th:block>
       </div>
     </section>
   </main>

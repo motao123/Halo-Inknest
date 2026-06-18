@@ -1,6 +1,6 @@
 <th:block th:fragment="post-card(post)">
   <article class="post-card post-card--classic post">
-    <div th:class="${((post.spec.cover ?: '') != '' or (theme.config.basic.default_cover ?: '') != '') ? 'post-time-img' : 'post-time-img no-thumbnail'}">
+    <div class="post-time-img no-thumbnail">
       <div class="post-date" th:if="${post.spec.publishTime != null}">
         <span th:text="${#temporals.format(post.spec.publishTime, 'dd')}">18</span>
         <small th:text="${#temporals.format(post.spec.publishTime, 'yyyy年-MM月')}">2026年-06月</small>
@@ -8,11 +8,6 @@
       <div class="post-date" th:unless="${post.spec.publishTime != null}">
         <span>--</span>
         <small>未发布</small>
-      </div>
-      <div class="post-preview" th:if="${(post.spec.cover ?: '') != '' or (theme.config.basic.default_cover ?: '') != ''}">
-        <a th:href="@{${post.status.permalink}}" aria-label="查看文章">
-          <img th:src="${(post.spec.cover ?: '') != '' ? post.spec.cover : theme.config.basic.default_cover}" th:alt="${post.spec.title}" loading="lazy">
-        </a>
       </div>
     </div>
 

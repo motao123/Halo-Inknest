@@ -21,7 +21,7 @@
     if (!panel) return;
     panel.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
-    if (!$('.search-panel.is-open') && !$('.mobile-menu.is-open') && !$('.sidebar-drawer.is-open')) {
+    if (!$('.search-panel.is-open') && !$('.mobile-menu.is-open')) {
       document.body.classList.remove('panel-open');
     }
   };
@@ -34,11 +34,7 @@
   $('[data-mobile-toggle]')?.addEventListener('click', () => openPanel(mobileMenu));
   $('[data-mobile-close]')?.addEventListener('click', () => closePanel(mobileMenu));
 
-  const sidebarDrawer = $('#sidebar-drawer');
-  $('[data-sidebar-toggle]')?.addEventListener('click', () => openPanel(sidebarDrawer));
-  $('[data-sidebar-close]')?.addEventListener('click', () => closePanel(sidebarDrawer));
-
-  [searchPanel, mobileMenu, sidebarDrawer].forEach((panel) => {
+  [searchPanel, mobileMenu].forEach((panel) => {
     panel?.addEventListener('click', (event) => {
       if (event.target === panel) closePanel(panel);
     });
@@ -46,7 +42,7 @@
 
   document.addEventListener('keydown', (event) => {
     if (event.key !== 'Escape') return;
-    [searchPanel, mobileMenu, sidebarDrawer].forEach(closePanel);
+    [searchPanel, mobileMenu].forEach(closePanel);
   });
 
   const backToTop = $('[data-back-to-top]');

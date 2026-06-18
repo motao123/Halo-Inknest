@@ -27,11 +27,10 @@ spec:
           accepts:
             - "image/*"
         - $formkit: attachment
-          name: default_cover
-          label: 默认文章封面
+          name: global_banner
+          label: 全局 Banner
           accepts:
             - "image/*"
-
     - group: navigation
       label: 导航设置
       formSchema:
@@ -43,64 +42,6 @@ spec:
           name: show_mobile_menu
           label: 启用移动菜单
           value: true
-        - $formkit: checkbox
-          name: show_sliding_sidebar
-          label: 启用侧滑栏
-          value: true
-
-    - group: banner
-      label: Banner 设置
-      formSchema:
-        - $formkit: attachment
-          name: home_banner
-          label: 首页 Banner
-          accepts:
-            - "image/*"
-        - $formkit: attachment
-          name: post_banner
-          label: 文章页默认 Banner
-          accepts:
-            - "image/*"
-        - $formkit: attachment
-          name: page_banner
-          label: 页面默认 Banner
-          accepts:
-            - "image/*"
-        - $formkit: attachment
-          name: archive_banner
-          label: 归档页默认 Banner
-          accepts:
-            - "image/*"
-        - $formkit: attachment
-          name: mobile_banner
-          label: 移动端 Banner
-          accepts:
-            - "image/*"
-        - $formkit: checkbox
-          name: banner_mask
-          label: 启用 Banner 遮罩
-          value: true
-        - $formkit: checkbox
-          name: banner_random_enabled
-          label: 启用随机 Banner
-          value: false
-        - $formkit: repeater
-          name: banner_random_images
-          label: 随机 Banner 图片
-          value: []
-          children:
-            - $formkit: attachment
-              name: image
-              label: 图片
-              accepts:
-                - "image/*"
-        - $formkit: range
-          name: banner_height
-          label: Banner 高度
-          value: 420
-          min: 260
-          max: 680
-          step: 20
 
     - group: post
       label: 文章设置
@@ -109,10 +50,6 @@ spec:
           name: excerpt_length
           label: 摘要字数
           value: 120
-        - $formkit: checkbox
-          name: show_cover
-          label: 显示文章封面
-          value: true
         - $formkit: checkbox
           name: show_category
           label: 显示分类
@@ -145,59 +82,6 @@ spec:
           name: show_comments
           label: 显示评论区
           value: true
-
-    - group: sidebar
-      label: 侧栏设置
-      formSchema:
-        - $formkit: checkbox
-          name: enabled
-          label: 启用侧边栏
-          value: true
-        - $formkit: select
-          name: mode
-          label: 侧边栏模式
-          value: drawer
-          options:
-            - label: 关闭
-              value: none
-            - label: 侧滑栏
-              value: drawer
-            - label: 固定侧栏
-              value: fixed
-        - $formkit: repeater
-          name: widgets
-          label: 侧边栏模块
-          value:
-            - value: site-info
-            - value: recent-posts
-            - value: categories
-            - value: tags
-          children:
-            - $formkit: select
-              name: value
-              label: 模块
-              value: site-info
-              options:
-                - label: 站点信息
-                  value: site-info
-                - label: 最新文章
-                  value: recent-posts
-                - label: 随机文章
-                  value: random-posts
-                - label: 分类
-                  value: categories
-                - label: 标签云
-                  value: tags
-                - label: 社交链接
-                  value: social
-        - $formkit: number
-          name: recent_post_count
-          label: 最新文章数量
-          value: 5
-        - $formkit: number
-          name: random_post_count
-          label: 随机文章数量
-          value: 5
 
     - group: social
       label: 社交链接
