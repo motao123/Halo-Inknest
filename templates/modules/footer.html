@@ -22,20 +22,20 @@
         <div class="social-links">
           <th:block th:each="item : ${theme.config.social.items}" th:with="label=${(item.name ?: '') != '' ? item.name : #strings.capitalize(item.platform)}">
             <a th:href="${item.platform == 'email' ? 'mailto:' + item.url : item.url}" th:target="${item.platform == 'email' ? '_self' : '_blank'}" rel="noopener noreferrer" class="social-link" th:aria-label="${label}" th:title="${label}">
-              <th:block th:if="${item.platform == 'github'}" th:replace="~{modules/icons :: github(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'twitter'}" th:replace="~{modules/icons :: twitter(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'weibo'}" th:replace="~{modules/icons :: weibo(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'bilibili'}" th:replace="~{modules/icons :: bilibili(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'zhihu'}" th:replace="~{modules/icons :: zhihu(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'telegram'}" th:replace="~{modules/icons :: telegram(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'wechat'}" th:replace="~{modules/icons :: wechat(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'qq'}" th:replace="~{modules/icons :: qq(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'email'}" th:replace="~{modules/icons :: email(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'rss'}" th:replace="~{modules/icons :: rss(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'juejin'}" th:replace="~{modules/icons :: juejin(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'linkedin'}" th:replace="~{modules/icons :: linkedin(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'douban'}" th:replace="~{modules/icons :: douban(size=18)}"></th:block>
-              <th:block th:if="${item.platform == 'website'}" th:replace="~{modules/icons :: website(size=18)}"></th:block>
+              <th:block th:if="${item.platform == 'github'}"><th:block th:replace="~{modules/icons :: github(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'twitter'}"><th:block th:replace="~{modules/icons :: twitter(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'weibo'}"><th:block th:replace="~{modules/icons :: weibo(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'bilibili'}"><th:block th:replace="~{modules/icons :: bilibili(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'zhihu'}"><th:block th:replace="~{modules/icons :: zhihu(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'telegram'}"><th:block th:replace="~{modules/icons :: telegram(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'wechat'}"><th:block th:replace="~{modules/icons :: wechat(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'qq'}"><th:block th:replace="~{modules/icons :: qq(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'email'}"><th:block th:replace="~{modules/icons :: email(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'rss'}"><th:block th:replace="~{modules/icons :: rss(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'juejin'}"><th:block th:replace="~{modules/icons :: juejin(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'linkedin'}"><th:block th:replace="~{modules/icons :: linkedin(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'douban'}"><th:block th:replace="~{modules/icons :: douban(size=18)}"></th:block></th:block>
+              <th:block th:if="${item.platform == 'website'}"><th:block th:replace="~{modules/icons :: website(size=18)}"></th:block></th:block>
             </a>
           </th:block>
         </div>
