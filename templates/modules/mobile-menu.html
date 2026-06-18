@@ -1,12 +1,12 @@
 <th:block th:fragment="mobile-menu">
-  <div class="mobile-menu" id="mobile-menu" aria-hidden="true">
+  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-labelledby="mobile-menu-title" aria-hidden="true">
     <div class="mobile-menu-panel">
       <button class="mobile-menu-close" type="button" data-mobile-close aria-label="关闭菜单">×</button>
       <a class="mobile-brand" th:href="@{/}">
         <img th:if="${theme.config.basic.site_logo != null and theme.config.basic.site_logo != ''}" th:src="@{${theme.config.basic.site_logo}}" th:alt="${site.title}">
-        <span th:text="${site.title}">InkNest</span>
+        <span id="mobile-menu-title" th:text="${site.title}">InkNest</span>
       </a>
-      <nav class="mobile-nav" th:with="menu=${menuFinder.getPrimary()}">
+      <nav class="mobile-nav" th:with="menu=${menuFinder.getPrimary()}" aria-label="移动端导航">
         <th:block th:if="${menu != null and menu.menuItems != null}">
           <a th:each="menuItem : ${menu.menuItems}" th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:target="${menuItem.spec.target != null and menuItem.spec.target.value != null ? menuItem.spec.target.value : '_self'}" th:rel="${menuItem.spec.target != null and menuItem.spec.target.value == '_blank' ? 'noopener noreferrer' : null}">菜单</a>
         </th:block>

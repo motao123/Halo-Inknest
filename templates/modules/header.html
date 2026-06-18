@@ -6,15 +6,15 @@
         <span class="site-title" th:text="${site.title}">InkNest</span>
       </a>
 
-      <nav class="site-nav" th:with="menu=${menuFinder.getPrimary()}">
+      <nav class="site-nav" th:with="menu=${menuFinder.getPrimary()}" aria-label="主导航">
         <th:block th:if="${menu != null and menu.menuItems != null}">
           <a th:each="menuItem : ${menu.menuItems}" th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:target="${menuItem.spec.target != null and menuItem.spec.target.value != null ? menuItem.spec.target.value : '_self'}" th:rel="${menuItem.spec.target != null and menuItem.spec.target.value == '_blank' ? 'noopener noreferrer' : null}">菜单</a>
         </th:block>
       </nav>
 
       <div class="header-actions">
-        <button th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" class="icon-button" type="button" data-search-toggle aria-label="打开搜索">搜索</button>
-        <button th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" class="icon-button mobile-menu-button" type="button" data-mobile-toggle aria-label="打开菜单">菜单</button>
+        <button th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" class="icon-button" type="button" data-search-toggle aria-controls="search-panel" aria-expanded="false" aria-label="打开搜索">搜索</button>
+        <button th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" class="icon-button mobile-menu-button" type="button" data-mobile-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="打开菜单">菜单</button>
       </div>
     </div>
   </header>

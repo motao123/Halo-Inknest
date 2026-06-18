@@ -4,7 +4,7 @@
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <div th:if="${theme.config.features.enable_reading_progress == null or theme.config.features.enable_reading_progress}" class="reading-progress" id="reading-progress"></div>
-  <th:block th:replace="~{modules/banner :: banner(title=${post.spec.title}, subtitle=${post.status.excerpt}, image=${null})}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${post.spec.title}, subtitle=${post.status.excerpt}, image=${post.spec.cover})}"></th:block>
 
   <main class="site-main">
     <article class="post-single">
@@ -15,12 +15,13 @@
               <a th:if="${(theme.config.post.show_category == null or theme.config.post.show_category) and post.categories != null and !post.categories.isEmpty()}" th:href="@{${post.categories[0].status.permalink}}" th:text="${post.categories[0].spec.displayName}">分类</a>
               <time th:if="${post.spec.publishTime != null}" th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}" th:text="${#temporals.format(post.spec.publishTime, 'yyyy年MM月dd日')}">2026年06月18日</time>
               <span th:if="${(theme.config.post.show_visit_count == null or theme.config.post.show_visit_count) and post.stats != null and post.stats.visit != null}"><span th:text="${post.stats.visit}">0</span> 次浏览</span>
+              <span th:if="${theme.config.post.show_reading_time == null or theme.config.post.show_reading_time}" data-reading-time>约 1 分钟</span>
             </div>
           </header>
 
           <aside th:if="${theme.config.post.show_toc == null or theme.config.post.show_toc}" class="post-toc" id="post-toc">
             <strong>目录</strong>
-            <nav id="toc-list"></nav>
+            <nav id="toc-list" aria-label="文章目录"></nav>
           </aside>
 
           <div class="post-content prose" id="post-content" th:utext="${post.content != null ? post.content.content : ''}">文章内容</div>
@@ -33,6 +34,17 @@
             <span>分享这篇文章</span>
             <button type="button" data-share-current>复制链接</button>
           </div>
+
+          <nav class="post-nav" th:if="${theme.config.post.show_prev_next == null or theme.config.post.show_prev_next}" th:with="postCursor=${postFinder.cursor(post.metadata.name)}" th:remove="${postCursor.hasPrevious() or postCursor.hasNext()} ? 'none' : 'all'" aria-label="文章导航">
+            <a class="post-nav-card post-nav-card--prev" th:if="${postCursor.hasPrevious()}" th:href="@{${postCursor.previous.status.permalink}}" aria-label="上一篇文章">
+              <span>上一篇</span>
+              <strong th:text="${postCursor.previous.spec.title}">上一篇标题</strong>
+            </a>
+            <a class="post-nav-card post-nav-card--next" th:if="${postCursor.hasNext()}" th:href="@{${postCursor.next.status.permalink}}" aria-label="下一篇文章">
+              <span>下一篇</span>
+              <strong th:text="${postCursor.next.spec.title}">下一篇标题</strong>
+            </a>
+          </nav>
         </div>
       </div>
     </article>

@@ -1,6 +1,9 @@
 (() => {
   const $ = (selector, root = document) => root.querySelector(selector);
   const $$ = (selector, root = document) => Array.from(root.querySelectorAll(selector));
+  const config = window.InkNestConfig || {};
+  const isEnabled = (key) => config[key] !== false;
+  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
   const header = $('#site-header');
   const updateHeader = () => {
@@ -10,28 +13,53 @@
   updateHeader();
   window.addEventListener('scroll', updateHeader, { passive: true });
 
-  const openPanel = (panel) => {
+  document.documentElement.classList.toggle('smooth-scroll', isEnabled('smoothScroll') && !prefersReducedMotion);
+
+  let activePanel = null;
+  let activeTrigger = null;
+  const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
+
+  const setExpanded = (trigger, expanded) => {
+    if (trigger) trigger.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+  };
+
+  const getFocusable = (panel) => $$(focusableSelector, panel).filter((item) => item.offsetParent !== null || item === document.activeElement);
+
+  const openPanel = (panel, trigger) => {
     if (!panel) return;
+    if (activePanel && activePanel !== panel) closePanel(activePanel, false);
+    activePanel = panel;
+    activeTrigger = trigger || document.activeElement;
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
     document.body.classList.add('panel-open');
+    setExpanded(activeTrigger, true);
+
+    const focusTarget = $('[type="search"]', panel) || $('[data-search-close], [data-mobile-close]', panel) || getFocusable(panel)[0];
+    focusTarget?.focus({ preventScroll: true });
   };
 
-  const closePanel = (panel) => {
+  const closePanel = (panel, restoreFocus = true) => {
     if (!panel) return;
     panel.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
     if (!$('.search-panel.is-open') && !$('.mobile-menu.is-open')) {
       document.body.classList.remove('panel-open');
     }
+    if (panel === activePanel) {
+      setExpanded(activeTrigger, false);
+      if (restoreFocus) activeTrigger?.focus?.({ preventScroll: true });
+      activePanel = null;
+      activeTrigger = null;
+    }
   };
 
   const searchPanel = $('#search-panel');
-  $('[data-search-toggle]')?.addEventListener('click', () => openPanel(searchPanel));
+  $('[data-search-toggle]')?.addEventListener('click', (event) => openPanel(searchPanel, event.currentTarget));
   $('[data-search-close]')?.addEventListener('click', () => closePanel(searchPanel));
 
   const mobileMenu = $('#mobile-menu');
-  $('[data-mobile-toggle]')?.addEventListener('click', () => openPanel(mobileMenu));
+  $('[data-mobile-toggle]')?.addEventListener('click', (event) => openPanel(mobileMenu, event.currentTarget));
   $('[data-mobile-close]')?.addEventListener('click', () => closePanel(mobileMenu));
 
   [searchPanel, mobileMenu].forEach((panel) => {
@@ -41,16 +69,37 @@
   });
 
   document.addEventListener('keydown', (event) => {
-    if (event.key !== 'Escape') return;
-    [searchPanel, mobileMenu].forEach(closePanel);
+    if (event.key === 'Escape') {
+      [searchPanel, mobileMenu].forEach(closePanel);
+      return;
+    }
+    if (event.key !== 'Tab' || !activePanel) return;
+
+    const focusable = getFocusable(activePanel);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
   });
 
   const backToTop = $('[data-back-to-top]');
   if (backToTop) {
-    const updateBackToTop = () => backToTop.classList.toggle('is-visible', window.scrollY > 420);
+    const updateBackToTop = () => {
+      const visible = window.scrollY > 420;
+      backToTop.classList.toggle('is-visible', visible);
+      backToTop.setAttribute('aria-hidden', visible ? 'false' : 'true');
+      backToTop.setAttribute('tabindex', visible ? '0' : '-1');
+    };
     updateBackToTop();
     window.addEventListener('scroll', updateBackToTop, { passive: true });
-    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: isEnabled('smoothScroll') && !prefersReducedMotion ? 'smooth' : 'auto' }));
   }
 
   const readingProgress = $('#reading-progress');
@@ -65,6 +114,13 @@
   }
 
   const postContent = $('#post-content');
+  const readingTime = $('[data-reading-time]');
+  if (postContent && readingTime) {
+    const text = postContent.textContent.trim();
+    const minutes = Math.max(1, Math.ceil(text.length / 400));
+    readingTime.textContent = `约 ${minutes} 分钟阅读`;
+  }
+
   const tocList = $('#toc-list');
   if (postContent && tocList) {
     const headings = $$('h2, h3', postContent).filter((heading) => heading.textContent.trim());
@@ -91,25 +147,34 @@
     }
   }
 
-  $$('pre').forEach((pre) => {
-    if (pre.querySelector('.code-copy')) return;
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.className = 'code-copy';
-    button.textContent = '复制';
-    button.addEventListener('click', async () => {
-      const code = pre.querySelector('code')?.innerText || pre.innerText;
-      try {
-        await navigator.clipboard.writeText(code);
-        button.textContent = '已复制';
-        setTimeout(() => { button.textContent = '复制'; }, 1600);
-      } catch (error) {
-        button.textContent = '复制失败';
-        setTimeout(() => { button.textContent = '复制'; }, 1600);
-      }
+  if (isEnabled('lazyload')) {
+    $$('.prose img').forEach((image) => {
+      if (!image.hasAttribute('loading')) image.setAttribute('loading', 'lazy');
+      if (!image.hasAttribute('decoding')) image.setAttribute('decoding', 'async');
     });
-    pre.appendChild(button);
-  });
+  }
+
+  if (isEnabled('codeCopy')) {
+    $$('pre').forEach((pre) => {
+      if (pre.querySelector('.code-copy')) return;
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'code-copy';
+      button.textContent = '复制';
+      button.addEventListener('click', async () => {
+        const code = pre.querySelector('code')?.innerText || pre.innerText;
+        try {
+          await navigator.clipboard.writeText(code);
+          button.textContent = '已复制';
+          setTimeout(() => { button.textContent = '复制'; }, 1600);
+        } catch (error) {
+          button.textContent = '复制失败';
+          setTimeout(() => { button.textContent = '复制'; }, 1600);
+        }
+      });
+      pre.appendChild(button);
+    });
+  }
 
   $('[data-share-current]')?.addEventListener('click', async (event) => {
     const button = event.currentTarget;

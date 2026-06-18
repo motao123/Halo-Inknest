@@ -3,7 +3,7 @@
 <head th:replace="~{modules/head :: head(title=${singlePage.spec.title}, description=${singlePage.status.excerpt})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
-  <th:block th:replace="~{modules/banner :: banner(title=${singlePage.spec.title}, subtitle=${singlePage.status.excerpt}, image=${null})}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${singlePage.spec.title}, subtitle=${singlePage.status.excerpt}, image=${singlePage.spec.cover})}"></th:block>
 
   <main class="site-main">
     <article class="page-single">

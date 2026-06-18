@@ -1,8 +1,8 @@
 <th:block th:fragment="footer">
-  <th:block th:replace="~{modules/search :: search}"></th:block>
+  <th:block th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" th:replace="~{modules/search :: search}"></th:block>
   <th:block th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" th:replace="~{modules/mobile-menu :: mobile-menu}"></th:block>
 
-  <button th:if="${theme.config.features.enable_back_to_top == null or theme.config.features.enable_back_to_top}" class="back-to-top" type="button" data-back-to-top aria-label="返回顶部">↑</button>
+  <button th:if="${theme.config.features.enable_back_to_top == null or theme.config.features.enable_back_to_top}" class="back-to-top" type="button" data-back-to-top aria-label="返回顶部" aria-hidden="true" tabindex="-1">↑</button>
 
   <footer class="site-footer">
     <div class="footer-inner" th:with="footerLogo=${theme.config.basic.footer_logo ?: ''}, footerDescription=${theme.config.footer.footer_description ?: ''}, showFooterDescription=${(theme.config.footer.footer_description ?: '') != '' and (theme.config.footer.footer_description ?: '') != 'InkNest，给文字一个安静的归处。'}">
@@ -61,6 +61,13 @@
     </div>
   </footer>
 
+  <script th:inline="javascript">
+    window.InkNestConfig = {
+      codeCopy: /*[[${theme.config.features.enable_code_copy == null or theme.config.features.enable_code_copy}]]*/ true,
+      smoothScroll: /*[[${theme.config.features.enable_smooth_scroll == null or theme.config.features.enable_smooth_scroll}]]*/ true,
+      lazyload: /*[[${theme.config.features.enable_lazyload == null or theme.config.features.enable_lazyload}]]*/ true
+    };
+  </script>
   <script th:if="${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}" th:src="@{/assets/lib/fancybox/fancybox.js(v=${theme.spec.version})}"></script>
   <script th:src="@{/assets/js/main.js(v=${theme.spec.version})}"></script>
   <script th:if="${theme.config.custom_code.custom_js != null and theme.config.custom_code.custom_js != ''}" th:inline="javascript" th:utext="${theme.config.custom_code.custom_js}"></script>
