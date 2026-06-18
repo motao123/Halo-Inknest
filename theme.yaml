@@ -14,10 +14,10 @@ spec:
   homepage: "https://github.com/motao123/Halo-Inknest"
   repo: "https://github.com/motao123/Halo-Inknest"
   issues: "https://github.com/motao123/Halo-Inknest/issues"
-  version: 1.0.0
+  version: 1.0.1
   requires: ">=2.25.0"
-  settingName: theme-inknest-setting
-  configMapName: theme-inknest-configmap
+  settingName: theme-inknest-setting-v2
+  configMapName: theme-inknest-configmap-v2
   customTemplates:
     page:
       - name: 默认
