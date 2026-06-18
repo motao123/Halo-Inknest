@@ -5,16 +5,25 @@
   <button th:if="${theme.config.features.enable_back_to_top == null or theme.config.features.enable_back_to_top}" class="back-to-top" type="button" data-back-to-top aria-label="返回顶部">↑</button>
 
   <footer class="site-footer">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <img th:if="${(theme.config.basic.footer_logo ?: theme.config.basic.site_logo) != ''}" th:src="@{${(theme.config.basic.footer_logo ?: '') != '' ? theme.config.basic.footer_logo : theme.config.basic.site_logo}}" th:alt="${site.title}">
-        <h2 th:text="${site.title}">InkNest</h2>
-        <p th:text="${theme.config.footer.footer_description ?: theme.config.basic.site_description}">InkNest，给文字一个安静的归处。</p>
+    <div class="footer-inner" th:with="footerLogo=${theme.config.basic.footer_logo ?: ''}, footerDescription=${theme.config.footer.footer_description ?: ''}, showFooterDescription=${(theme.config.footer.footer_description ?: '') != '' and (theme.config.footer.footer_description ?: '') != 'InkNest，给文字一个安静的归处。'}">
+      <div class="footer-brand" th:if="${footerLogo != '' or showFooterDescription}">
+        <img th:if="${footerLogo != ''}" th:src="@{${footerLogo}}" th:alt="${site.title}">
+        <h2 th:if="${showFooterDescription}" th:text="${site.title}">InkNest</h2>
+        <p th:if="${showFooterDescription}" th:text="${footerDescription}">InkNest，给文字一个安静的归处。</p>
       </div>
 
       <div class="footer-links" th:if="${theme.config.footer.quick_links != null and !#lists.isEmpty(theme.config.footer.quick_links)}">
         <h3>快捷链接</h3>
         <a th:each="link : ${theme.config.footer.quick_links}" th:href="@{${link.url}}" th:text="${link.name}">链接</a>
+      </div>
+
+      <div class="footer-links" th:if="${linkFinder != null and linkFinder.count() > 0}">
+        <h3>友情链接</h3>
+        <th:block th:each="group : ${linkFinder.groupBy()}">
+          <th:block th:if="${group.links != null and !#lists.isEmpty(group.links)}">
+            <a th:each="link : ${group.links}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:text="${link.spec.displayName}">友情链接</a>
+          </th:block>
+        </th:block>
       </div>
 
       <div class="footer-social" th:if="${theme.config.social != null and theme.config.social.items != null and !#lists.isEmpty(theme.config.social.items)}">

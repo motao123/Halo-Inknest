@@ -12,7 +12,7 @@ data:
   social: |
     {"items":[]}
   footer: |
-    {"footer_description":"InkNest，给文字一个安静的归处。","quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"https://beian.mps.gov.cn/#/query/webSearch","show_theme_credit":true}
+    {"footer_description":"","quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"https://beian.mps.gov.cn/#/query/webSearch","show_theme_credit":true}
   features: |
     {"enable_fancybox":true,"enable_reading_progress":true,"enable_code_copy":true,"enable_smooth_scroll":true,"enable_lazyload":true,"enable_back_to_top":true}
   custom_code: |

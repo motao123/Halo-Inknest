@@ -140,7 +140,7 @@ spec:
         - $formkit: textarea
           name: footer_description
           label: 页脚描述
-          value: "InkNest，给文字一个安静的归处。"
+          value: ""
         - $formkit: repeater
           name: quick_links
           label: 快捷链接
