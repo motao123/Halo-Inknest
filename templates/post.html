@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title=${post.spec.title}, description=${post.status.excerpt}, type='article', image=${post.spec.cover}, publishedTime=${post.spec.publishTime}, modifiedTime=${null}, authorName=${null}, url=${post.status.permalink})}"></head>
+<head th:replace="~{modules/head :: head(title=${post.spec.title}, description=${post.status.excerpt}, type='article', image=${post.spec.cover}, publishedTime=${post.spec.publishTime}, modifiedTime=${null}, authorName=${null}, url=${post.status.permalink}, robots=${null})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <div th:if="${theme.config.features.enable_reading_progress == null or theme.config.features.enable_reading_progress}" class="reading-progress" id="reading-progress"></div>
   <th:block th:replace="~{modules/banner :: banner(title=${post.spec.title}, subtitle=${post.status.excerpt}, image=${post.spec.cover})}"></th:block>
 
-  <main class="site-main">
+  <main class="site-main" id="site-main">
     <article class="post-single">
       <div class="container container--narrow">
         <th:block th:replace="~{modules/breadcrumbs :: breadcrumbs(current=${post.spec.title}, parentName=${post.categories != null and !post.categories.isEmpty() ? post.categories[0].spec.displayName : '文章'}, parentUrl=${post.categories != null and !post.categories.isEmpty() ? post.categories[0].status.permalink : '/archives'})}"></th:block>
@@ -47,8 +47,6 @@
           <div class="share-box" th:if="${theme.config.post.show_share == null or theme.config.post.show_share}">
             <span>分享这篇文章</span>
             <div class="share-actions">
-              <button type="button" data-share-native th:attr="data-share-title=${post.spec.title}">系统分享</button>
-              <button type="button" data-share-markdown th:attr="data-share-title=${post.spec.title}">复制 Markdown</button>
               <button type="button" data-share-current>复制链接</button>
             </div>
           </div>

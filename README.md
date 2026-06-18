@@ -7,11 +7,12 @@ InkNest 是一款为 Halo 2 打造的内容型博客主题，主打大图 Banner
 - 大图 Banner 与遮罩展示，默认图提供 WebP 优化版本
 - 接近 WordPress Dahuzi 风格的经典文章列表
 - 文章页目录、阅读进度、代码复制、图片灯箱、作者信息、转载说明和上一篇 / 下一篇
+- Skip link、焦点管理、降低动态效果和 404 可读导航等可访问性优化
 - 搜索弹窗、移动菜单、返回顶部和 `/` 搜索快捷键
 - 分类、标签、归档、作者页、404 页面适配
 - 友情链接页，支持 Halo 链接插件
 - 页脚社交链接、快捷链接、友情链接、ICP 备案和公安联网备案展示
-- Open Graph、Twitter Card、canonical、文章结构化数据、RSS alternate 和主题色等 SEO 元信息
+- Open Graph、Twitter Card、canonical、robots、文章结构化数据、面包屑结构化数据、RSS alternate 和主题色等 SEO 元信息
 - 自定义 Head、CSS、JavaScript 和 Footer 代码
 
 ## 安装
@@ -33,7 +34,7 @@ InkNest 是一款为 Halo 2 打造的内容型博客主题，主打大图 Banner
 - 文章列表左侧可选择日期块、封面图或自动模式；默认日期块更接近当前经典列表。
 - 社交链接选择“邮箱”平台时，只填写邮箱地址，不要填写 `mailto:`。
 - 页脚友情链接支持显示开关和每组显示数量限制，链接很多时建议限制数量。
-- 自定义代码会直接输出到页面，仅建议可信站点管理员使用。
+- 自定义 JavaScript 会在 DOMContentLoaded 后执行；自定义代码仅建议可信站点管理员使用。
 
 ## 兼容性
 
@@ -42,7 +43,7 @@ InkNest 是一款为 Halo 2 打造的内容型博客主题，主打大图 Banner
 
 ## 版本
 
-当前版本：`1.0.7`
+当前版本：`1.0.9`
 
 ## License
 

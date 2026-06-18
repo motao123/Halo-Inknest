@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title='文章归档', description='按时间浏览所有文章', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url='/archives')}"></head>
+<head th:replace="~{modules/head :: head(title='文章归档', description='按时间浏览所有文章', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url='/archives', robots=${null})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <th:block th:replace="~{modules/banner :: banner(title='文章归档', subtitle='按时间收藏每一次表达', image=${null})}"></th:block>
 
-  <main class="site-main">
+  <main class="site-main" id="site-main">
     <section class="section-archives">
       <div class="container container--narrow">
         <div class="archives-list" th:if="${archives != null and archives.items != null}">

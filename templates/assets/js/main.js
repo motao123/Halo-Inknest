@@ -98,7 +98,7 @@
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      [searchPanel, mobileMenu].forEach(closePanel);
+      [searchPanel, mobileMenu].forEach((panel) => closePanel(panel));
       return;
     }
     if (event.key === '/' && isEnabled('searchShortcut') && searchPanel && !activePanel && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
@@ -173,6 +173,7 @@
         link.href = '#' + encodeURIComponent(heading.id);
         link.textContent = heading.textContent.trim();
         link.className = 'toc-link toc-link--' + heading.tagName.toLowerCase();
+        link.dataset.targetId = heading.id;
         tocList.appendChild(link);
       });
 
@@ -181,7 +182,7 @@
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
             if (!entry.isIntersecting) return;
-            tocLinks.forEach((link) => link.classList.toggle('is-active', decodeURIComponent(link.hash.slice(1)) === entry.target.id));
+            tocLinks.forEach((link) => link.classList.toggle('is-active', link.dataset.targetId === entry.target.id));
           });
         }, { rootMargin: '-20% 0px -65% 0px' });
         headings.forEach((heading) => observer.observe(heading));
@@ -207,6 +208,7 @@
       button.type = 'button';
       button.className = 'code-copy';
       button.textContent = '复制';
+      button.setAttribute('aria-live', 'polite');
       button.addEventListener('click', async () => {
         const code = pre.querySelector('code')?.innerText || pre.innerText;
         try {
@@ -236,26 +238,6 @@
     copyText(event.currentTarget, window.location.href, '链接已复制', '复制链接');
   });
 
-  $('[data-share-markdown]')?.addEventListener('click', (event) => {
-    const button = event.currentTarget;
-    const title = button.dataset.shareTitle || document.title;
-    copyText(button, `[${title}](${window.location.href})`, 'Markdown 已复制', '复制 Markdown');
-  });
-
-  $('[data-share-native]')?.addEventListener('click', async (event) => {
-    const button = event.currentTarget;
-    const title = button.dataset.shareTitle || document.title;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title, url: window.location.href });
-      } catch (error) {
-        if (error?.name !== 'AbortError') button.textContent = '分享失败';
-      }
-      setTimeout(() => { button.textContent = '系统分享'; }, 1600);
-      return;
-    }
-    copyText(button, window.location.href, '链接已复制', '系统分享');
-  });
 
   const proseImages = $$('.prose img');
   if (isEnabled('fancybox') && proseImages.length && config.fancyboxCss && config.fancyboxJs && !window.__InkNestFancyboxLoading) {

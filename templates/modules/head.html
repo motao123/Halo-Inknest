@@ -1,9 +1,10 @@
-<head th:fragment="head(title, description, type, image, publishedTime, modifiedTime, authorName, url)">
+<head th:fragment="head(title, description, type, image, publishedTime, modifiedTime, authorName, url, robots)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title th:text="${title != null and title != '' ? title + ' - ' + site.title : site.title}">InkNest</title>
   <meta name="description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
+  <meta th:if="${(robots ?: '') != ''}" name="robots" th:content="${robots}">
   <link rel="icon" th:if="${theme.config.basic.favicon != null and theme.config.basic.favicon != ''}" th:href="@{${theme.config.basic.favicon}}">
   <meta name="theme-color" content="#a8693d">
   <meta property="og:site_name" th:content="${site.title}">
@@ -28,7 +29,11 @@
       "headline": /*[[${title != null and title != '' ? title : site.title}]]*/ "InkNest",
       "description": /*[[${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}]]*/ "",
       "url": /*[[@{${url ?: '/'}}]]*/ "",
+      "mainEntityOfPage": /*[[@{${url ?: '/'}}]]*/ "",
+      "inLanguage": "zh-CN",
       "image": /*[[@{${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}}]]*/ "",
+      "datePublished": /*[[${publishedTime}]]*/ null,
+      "dateModified": /*[[${modifiedTime != null ? modifiedTime : publishedTime}]]*/ null,
       "author": {"@type": "Person", "name": /*[[${(authorName ?: '') != '' ? authorName : site.title}]]*/ ""},
       "publisher": {"@type": "Organization", "name": /*[[${site.title}]]*/ ""}
     }

@@ -7,7 +7,7 @@
   <footer class="site-footer">
     <div class="footer-inner" th:with="footerLogo=${theme.config.basic.footer_logo ?: ''}">
       <div class="footer-brand" th:if="${footerLogo != ''}">
-        <img th:src="@{${footerLogo}}" th:alt="${site.title}" loading="lazy" decoding="async">
+        <img th:src="@{${footerLogo}}" th:alt="${site.title}" width="50" height="50" loading="lazy" decoding="async">
       </div>
 
       <div class="footer-links" th:if="${theme.config.footer.quick_links != null and !#lists.isEmpty(theme.config.footer.quick_links)}">
@@ -54,7 +54,7 @@
     <div class="footer-bottom">
       <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> <span th:text="${site.title}">InkNest</span></span>
       <a th:if="${(theme.config.footer.icp_number ?: '') != ''}" th:href="@{${theme.config.footer.icp_url}}" target="_blank" rel="noopener" th:text="${theme.config.footer.icp_number}">ICP备案</a>
-      <a th:if="${(theme.config.footer.gongan_number ?: '') != ''}" th:href="@{${theme.config.footer.gongan_url}}" target="_blank" rel="noopener"><img th:src="@{/assets/images/icons/gaba.png}" alt="" loading="lazy"><span th:text="${theme.config.footer.gongan_number}">公安备案</span></a>
+      <a th:if="${(theme.config.footer.gongan_number ?: '') != ''}" th:href="@{${theme.config.footer.gongan_url}}" target="_blank" rel="noopener"><img th:src="@{/assets/images/icons/gaba.png}" alt="" width="16" height="16" loading="lazy" decoding="async"><span th:text="${theme.config.footer.gongan_number}">公安备案</span></a>
       <span th:if="${theme.config.footer.show_theme_credit == null or theme.config.footer.show_theme_credit}">Theme InkNest</span>
     </div>
   </footer>
@@ -71,7 +71,11 @@
     };
   </script>
   <script th:src="@{/assets/js/main.js(v=${theme.spec.version})}" defer></script>
-  <script th:if="${theme.config.custom_code.custom_js != null and theme.config.custom_code.custom_js != ''}" th:inline="javascript" th:utext="${theme.config.custom_code.custom_js}"></script>
   <th:block th:utext="${theme.config.custom_code.custom_footer}"></th:block>
   <halo:footer />
+  <script th:if="${theme.config.custom_code.custom_js != null and theme.config.custom_code.custom_js != ''}" th:inline="javascript">
+    window.addEventListener('DOMContentLoaded', () => {
+      /*[(${theme.config.custom_code.custom_js})]*/
+    });
+  </script>
 </th:block>

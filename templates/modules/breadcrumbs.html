@@ -7,4 +7,15 @@
     <span aria-hidden="true">/</span>
     <span aria-current="page" th:text="${current}">当前页面</span>
   </nav>
+  <script type="application/ld+json" th:inline="javascript">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {"@type": "ListItem", "position": 1, "name": "首页", "item": /*[[@{/}]]*/ ""},
+        {"@type": "ListItem", "position": 2, "name": /*[[${(parentName ?: '') != '' ? parentName : current}]]*/ "", "item": /*[[@{${(parentUrl ?: '') != '' ? parentUrl : '/'}}]]*/ ""},
+        {"@type": "ListItem", "position": 3, "name": /*[[${current}]]*/ ""}
+      ]
+    }
+  </script>
 </th:block>

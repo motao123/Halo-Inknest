@@ -1,8 +1,9 @@
 <th:block th:fragment="header">
+  <a class="skip-link" href="#site-main">跳到正文</a>
   <header class="site-header" id="site-header" th:classappend="${theme.config.navigation.show_mobile_menu == false} ? ' mobile-menu-disabled' : ''">
     <div class="header-inner">
       <a class="site-brand" th:href="@{/}" aria-label="返回首页">
-        <img class="site-logo" th:if="${theme.config.basic.site_logo != null and theme.config.basic.site_logo != ''}" th:src="@{${theme.config.basic.site_logo}}" th:alt="${site.title}" decoding="async">
+        <img class="site-logo" th:if="${theme.config.basic.site_logo != null and theme.config.basic.site_logo != ''}" th:src="@{${theme.config.basic.site_logo}}" th:alt="${site.title}" width="38" height="38" decoding="async">
         <span class="site-title" th:text="${site.title}">InkNest</span>
       </a>
 

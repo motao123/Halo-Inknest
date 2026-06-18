@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title=${singlePage.spec.title}, description=${singlePage.status.excerpt}, type='website', image=${singlePage.spec.cover}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url=${singlePage.status.permalink})}"></head>
+<head th:replace="~{modules/head :: head(title=${singlePage.spec.title}, description=${singlePage.status.excerpt}, type='website', image=${singlePage.spec.cover}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url=${singlePage.status.permalink}, robots=${null})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <th:block th:replace="~{modules/banner :: banner(title=${singlePage.spec.title}, subtitle=${singlePage.status.excerpt}, image=${singlePage.spec.cover})}"></th:block>
 
-  <main class="site-main">
+  <main class="site-main" id="site-main">
     <article class="page-single">
       <div class="container container--narrow">
         <th:block th:replace="~{modules/breadcrumbs :: breadcrumbs(current=${singlePage.spec.title}, parentName='页面', parentUrl='')}"></th:block>
