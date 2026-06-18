@@ -1,0 +1,23 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: ConfigMap
+metadata:
+  name: theme-inknest-configmap
+data:
+  basic: |
+    {"site_logo":"","footer_logo":"","site_description":"把灵感安放在文字的巢里","favicon":"","default_cover":"/themes/theme-inknest/assets/images/screenshot.png"}
+  navigation: |
+    {"main_menu":"primary","mobile_menu":"primary","show_search":true,"show_mobile_menu":true,"show_sliding_sidebar":true}
+  banner: |
+    {"home_banner":"/themes/theme-inknest/assets/images/screenshot.png","post_banner":"/themes/theme-inknest/assets/images/screenshot.png","page_banner":"/themes/theme-inknest/assets/images/screenshot.png","archive_banner":"/themes/theme-inknest/assets/images/screenshot.png","mobile_banner":"","banner_mask":true,"banner_random_enabled":false,"banner_random_images":[],"banner_height":420}
+  post: |
+    {"list_layout":"list","excerpt_length":120,"show_cover":true,"show_category":true,"show_tags":true,"show_visit_count":true,"show_reading_time":true,"show_toc":true,"show_share":true,"show_prev_next":true,"show_comments":true}
+  sidebar: |
+    {"enabled":true,"mode":"drawer","widgets":[{"value":"site-info"},{"value":"recent-posts"},{"value":"categories"},{"value":"tags"}],"recent_post_count":5,"random_post_count":5}
+  social: |
+    {"items":[]}
+  footer: |
+    {"footer_description":"InkNest，给文字一个安静的归处。","quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"","show_theme_credit":true,"show_runtime":false}
+  features: |
+    {"enable_fancybox":true,"enable_reading_progress":true,"enable_code_copy":true,"enable_smooth_scroll":true,"enable_lazyload":true,"enable_heart_effect":false,"enable_back_to_top":true}
+  custom_code: |
+    {"custom_head":"","custom_css":"","custom_js":"","custom_footer":""}

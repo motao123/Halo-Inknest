@@ -1,0 +1,345 @@
+apiVersion: v1alpha1
+kind: Setting
+metadata:
+  name: theme-inknest-setting
+spec:
+  forms:
+    - group: basic
+      label: 基本设置
+      formSchema:
+        - $formkit: attachment
+          name: site_logo
+          label: 站点 Logo
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: footer_logo
+          label: 页脚 Logo
+          accepts:
+            - "image/*"
+        - $formkit: textarea
+          name: site_description
+          label: 站点描述
+          value: "把灵感安放在文字的巢里"
+        - $formkit: attachment
+          name: favicon
+          label: Favicon
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: default_cover
+          label: 默认文章封面
+          accepts:
+            - "image/*"
+
+    - group: navigation
+      label: 导航设置
+      formSchema:
+        - $formkit: text
+          name: main_menu
+          label: 主菜单名称
+          value: "primary"
+        - $formkit: text
+          name: mobile_menu
+          label: 移动端菜单名称
+          value: "primary"
+        - $formkit: checkbox
+          name: show_search
+          label: 显示搜索入口
+          value: true
+        - $formkit: checkbox
+          name: show_mobile_menu
+          label: 启用移动菜单
+          value: true
+        - $formkit: checkbox
+          name: show_sliding_sidebar
+          label: 启用侧滑栏
+          value: true
+
+    - group: banner
+      label: Banner 设置
+      formSchema:
+        - $formkit: attachment
+          name: home_banner
+          label: 首页 Banner
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: post_banner
+          label: 文章页默认 Banner
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: page_banner
+          label: 页面默认 Banner
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: archive_banner
+          label: 归档页默认 Banner
+          accepts:
+            - "image/*"
+        - $formkit: attachment
+          name: mobile_banner
+          label: 移动端 Banner
+          accepts:
+            - "image/*"
+        - $formkit: checkbox
+          name: banner_mask
+          label: 启用 Banner 遮罩
+          value: true
+        - $formkit: checkbox
+          name: banner_random_enabled
+          label: 启用随机 Banner
+          value: false
+        - $formkit: repeater
+          name: banner_random_images
+          label: 随机 Banner 图片
+          value: []
+          children:
+            - $formkit: attachment
+              name: image
+              label: 图片
+              accepts:
+                - "image/*"
+        - $formkit: range
+          name: banner_height
+          label: Banner 高度
+          value: 420
+          min: 260
+          max: 680
+          step: 20
+
+    - group: post
+      label: 文章设置
+      formSchema:
+        - $formkit: select
+          name: list_layout
+          label: 文章列表布局
+          value: "list"
+          options:
+            - label: 经典列表
+              value: list
+            - label: 封面卡片
+              value: cover
+            - label: 双列网格
+              value: grid
+        - $formkit: number
+          name: excerpt_length
+          label: 摘要字数
+          value: 120
+        - $formkit: checkbox
+          name: show_cover
+          label: 显示文章封面
+          value: true
+        - $formkit: checkbox
+          name: show_category
+          label: 显示分类
+          value: true
+        - $formkit: checkbox
+          name: show_tags
+          label: 显示标签
+          value: true
+        - $formkit: checkbox
+          name: show_visit_count
+          label: 显示浏览量
+          value: true
+        - $formkit: checkbox
+          name: show_reading_time
+          label: 显示阅读时间
+          value: true
+        - $formkit: checkbox
+          name: show_toc
+          label: 显示文章目录
+          value: true
+        - $formkit: checkbox
+          name: show_share
+          label: 显示分享按钮
+          value: true
+        - $formkit: checkbox
+          name: show_prev_next
+          label: 显示上一篇 / 下一篇
+          value: true
+        - $formkit: checkbox
+          name: show_comments
+          label: 显示评论区
+          value: true
+
+    - group: sidebar
+      label: 侧栏设置
+      formSchema:
+        - $formkit: checkbox
+          name: enabled
+          label: 启用侧边栏
+          value: true
+        - $formkit: select
+          name: mode
+          label: 侧边栏模式
+          value: drawer
+          options:
+            - label: 关闭
+              value: none
+            - label: 侧滑栏
+              value: drawer
+            - label: 固定侧栏
+              value: fixed
+        - $formkit: repeater
+          name: widgets
+          label: 侧边栏模块
+          value:
+            - value: site-info
+            - value: recent-posts
+            - value: categories
+            - value: tags
+          children:
+            - $formkit: select
+              name: value
+              label: 模块
+              value: site-info
+              options:
+                - label: 站点信息
+                  value: site-info
+                - label: 最新文章
+                  value: recent-posts
+                - label: 随机文章
+                  value: random-posts
+                - label: 分类
+                  value: categories
+                - label: 标签云
+                  value: tags
+                - label: 社交链接
+                  value: social
+        - $formkit: number
+          name: recent_post_count
+          label: 最新文章数量
+          value: 5
+        - $formkit: number
+          name: random_post_count
+          label: 随机文章数量
+          value: 5
+
+    - group: social
+      label: 社交链接
+      formSchema:
+        - $formkit: repeater
+          name: items
+          label: 社交链接
+          value: []
+          children:
+            - $formkit: text
+              name: name
+              label: 名称
+              value: "GitHub"
+            - $formkit: text
+              name: icon
+              label: 图标文字
+              value: "G"
+            - $formkit: text
+              name: url
+              label: 链接
+              placeholder: https://...
+            - $formkit: attachment
+              name: qrcode
+              label: 二维码
+              accepts:
+                - "image/*"
+            - $formkit: checkbox
+              name: open_in_new_tab
+              label: 新窗口打开
+              value: true
+
+    - group: footer
+      label: 页脚设置
+      formSchema:
+        - $formkit: textarea
+          name: footer_description
+          label: 页脚描述
+          value: "InkNest，给文字一个安静的归处。"
+        - $formkit: repeater
+          name: quick_links
+          label: 快捷链接
+          value: []
+          children:
+            - $formkit: text
+              name: name
+              label: 名称
+            - $formkit: text
+              name: url
+              label: 链接
+        - $formkit: text
+          name: icp_number
+          label: ICP 备案号
+        - $formkit: text
+          name: icp_url
+          label: ICP 备案链接
+          value: "https://beian.miit.gov.cn/"
+        - $formkit: text
+          name: gongan_number
+          label: 公安联网备案号
+        - $formkit: text
+          name: gongan_url
+          label: 公安联网备案链接
+        - $formkit: checkbox
+          name: show_theme_credit
+          label: 显示主题版权
+          value: true
+        - $formkit: checkbox
+          name: show_runtime
+          label: 显示运行时间
+          value: false
+
+    - group: features
+      label: 前端增强
+      formSchema:
+        - $formkit: checkbox
+          name: enable_fancybox
+          label: 图片灯箱
+          value: true
+        - $formkit: checkbox
+          name: enable_reading_progress
+          label: 阅读进度
+          value: true
+        - $formkit: checkbox
+          name: enable_code_copy
+          label: 代码复制
+          value: true
+        - $formkit: checkbox
+          name: enable_smooth_scroll
+          label: 平滑滚动
+          value: true
+        - $formkit: checkbox
+          name: enable_lazyload
+          label: 图片懒加载
+          value: true
+        - $formkit: checkbox
+          name: enable_heart_effect
+          label: 心形飘落动效
+          value: false
+        - $formkit: checkbox
+          name: enable_back_to_top
+          label: 返回顶部
+          value: true
+
+    - group: custom_code
+      label: 自定义代码
+      formSchema:
+        - $formkit: code
+          name: custom_head
+          label: 自定义 Head
+          value: ""
+          language: html
+        - $formkit: code
+          name: custom_css
+          label: 自定义 CSS
+          value: ""
+          language: css
+        - $formkit: code
+          name: custom_js
+          label: 自定义 JavaScript
+          value: ""
+          language: javascript
+        - $formkit: code
+          name: custom_footer
+          label: 自定义 Footer
+          value: ""
+          language: html

@@ -1,0 +1,44 @@
+<th:block th:fragment="footer">
+  <th:block th:replace="~{modules/search :: search}"></th:block>
+  <th:block th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" th:replace="~{modules/mobile-menu :: mobile-menu}"></th:block>
+
+  <div class="sidebar-drawer" id="sidebar-drawer" aria-hidden="true" th:if="${(theme.config.sidebar.enabled == null or theme.config.sidebar.enabled) and theme.config.sidebar.mode == 'drawer'}">
+    <button class="drawer-close" type="button" data-sidebar-close aria-label="关闭侧栏">×</button>
+    <th:block th:replace="~{modules/sidebar :: sidebar(extraClass='site-sidebar--drawer')}"></th:block>
+  </div>
+
+  <button th:if="${theme.config.features.enable_back_to_top == null or theme.config.features.enable_back_to_top}" class="back-to-top" type="button" data-back-to-top aria-label="返回顶部">↑</button>
+
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img th:if="${(theme.config.basic.footer_logo ?: theme.config.basic.site_logo) != ''}" th:src="@{${(theme.config.basic.footer_logo ?: '') != '' ? theme.config.basic.footer_logo : theme.config.basic.site_logo}}" th:alt="${site.title}">
+        <h2 th:text="${site.title}">InkNest</h2>
+        <p th:text="${theme.config.footer.footer_description ?: theme.config.basic.site_description}">InkNest，给文字一个安静的归处。</p>
+      </div>
+
+      <div class="footer-links" th:if="${theme.config.footer.quick_links != null and !#lists.isEmpty(theme.config.footer.quick_links)}">
+        <h3>快捷链接</h3>
+        <a th:each="link : ${theme.config.footer.quick_links}" th:href="@{${link.url}}" th:text="${link.name}">链接</a>
+      </div>
+
+      <div class="footer-social" th:if="${theme.config.social.items != null and !#lists.isEmpty(theme.config.social.items)}">
+        <h3>社交</h3>
+        <a th:each="item : ${theme.config.social.items}" th:href="@{${item.url}}" th:target="${item.open_in_new_tab ? '_blank' : '_self'}" rel="noopener" th:text="${item.name}">GitHub</a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <span>© <span th:text="${#dates.format(#dates.createNow(), 'yyyy')}">2026</span> <span th:text="${site.title}">InkNest</span></span>
+      <a th:if="${(theme.config.footer.icp_number ?: '') != ''}" th:href="@{${theme.config.footer.icp_url}}" target="_blank" rel="noopener" th:text="${theme.config.footer.icp_number}">ICP备案</a>
+      <a th:if="${(theme.config.footer.gongan_number ?: '') != ''}" th:href="@{${theme.config.footer.gongan_url}}" target="_blank" rel="noopener"><img th:src="@{/assets/images/icons/gaba.png}" alt="" loading="lazy"><span th:text="${theme.config.footer.gongan_number}">公安备案</span></a>
+      <span th:if="${theme.config.footer.show_theme_credit == null or theme.config.footer.show_theme_credit}">Theme InkNest</span>
+    </div>
+  </footer>
+
+  <script th:if="${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}" th:src="@{/assets/lib/fancybox/fancybox.js(v=${theme.spec.version})}"></script>
+  <script th:src="@{/assets/js/main.js(v=${theme.spec.version})}"></script>
+  <script th:if="${theme.config.custom_code.custom_js != null and theme.config.custom_code.custom_js != ''}" th:inline="javascript" th:utext="${theme.config.custom_code.custom_js}"></script>
+  <th:block th:utext="${theme.config.custom_code.custom_footer}"></th:block>
+  <halo:footer />
+</th:block>

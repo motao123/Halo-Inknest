@@ -1,0 +1,43 @@
+apiVersion: theme.halo.run/v1alpha1
+kind: Theme
+metadata:
+  name: theme-inknest
+  labels:
+    theme.halo.run/module: default
+spec:
+  displayName: InkNest
+  author:
+    name: motao
+    website: https://lenghang.com
+  description: 一款为 Halo 2 打造的沉浸式内容博客主题，融合大图 Banner、卡片列表、侧滑栏和舒适阅读体验
+  logo: "/themes/theme-inknest/assets/images/screenshot.png"
+  homepage: "https://github.com/motao123/Halo-Inknest"
+  repo: "https://github.com/motao123/Halo-Inknest"
+  issues: "https://github.com/motao123/Halo-Inknest/issues"
+  version: 1.0.0
+  requires: ">=2.25.0"
+  settingName: theme-inknest-setting
+  configMapName: theme-inknest-configmap
+  customTemplates:
+    page:
+      - name: 默认
+        description: 标准页面模板
+        screenshot: ""
+        file: page.html
+      - name: 友情链接
+        description: 友情链接展示页（读取链接管理插件数据）
+        screenshot: ""
+        file: links.html
+    post:
+      - name: 默认
+        description: 标准文章模板
+        screenshot: ""
+        file: post.html
+    category:
+      - name: 默认
+        description: 标准分类归档模板
+        screenshot: ""
+        file: category.html
+  license:
+    - name: "GPL-3.0"
+      url: "https://github.com/motao123/Halo-Inknest/blob/main/LICENSE"

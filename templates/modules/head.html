@@ -1,0 +1,12 @@
+<head th:fragment="head(title, description)">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title th:text="${title != null and title != '' ? title + ' - ' + site.title : site.title}">InkNest</title>
+  <meta name="description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
+  <link rel="icon" th:if="${theme.config.basic.favicon != null and theme.config.basic.favicon != ''}" th:href="@{${theme.config.basic.favicon}}">
+  <link rel="stylesheet" th:href="@{/assets/css/style.css(v=${theme.spec.version})}">
+  <link rel="stylesheet" th:if="${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}" th:href="@{/assets/lib/fancybox/fancybox.css(v=${theme.spec.version})}">
+  <th:block th:utext="${theme.config.custom_code.custom_head}"></th:block>
+  <style th:if="${theme.config.custom_code.custom_css != null and theme.config.custom_code.custom_css != ''}" th:utext="${theme.config.custom_code.custom_css}"></style>
+</head>

@@ -1,0 +1,23 @@
+<th:block th:fragment="header">
+  <header class="site-header" id="site-header">
+    <div class="header-inner">
+      <a class="site-brand" th:href="@{/}" aria-label="返回首页">
+        <img class="site-logo" th:if="${theme.config.basic.site_logo != null and theme.config.basic.site_logo != ''}" th:src="@{${theme.config.basic.site_logo}}" th:alt="${site.title}">
+        <span class="site-title" th:text="${site.title}">InkNest</span>
+      </a>
+
+      <nav class="site-nav" th:with="menu=${menuFinder.getPrimary()}">
+        <a th:href="@{/}">首页</a>
+        <th:block th:if="${menu != null and menu.menuItems != null}">
+          <a th:each="menuItem : ${menu.menuItems}" th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:target="${menuItem.spec.target != null and menuItem.spec.target.value != null ? menuItem.spec.target.value : '_self'}" th:rel="${menuItem.spec.target != null and menuItem.spec.target.value == '_blank' ? 'noopener noreferrer' : null}">菜单</a>
+        </th:block>
+      </nav>
+
+      <div class="header-actions">
+        <button th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" class="icon-button" type="button" data-search-toggle aria-label="打开搜索">搜索</button>
+        <button th:if="${(theme.config.navigation.show_sliding_sidebar == null or theme.config.navigation.show_sliding_sidebar) and (theme.config.sidebar.enabled == null or theme.config.sidebar.enabled) and theme.config.sidebar.mode == 'drawer'}" class="icon-button" type="button" data-sidebar-toggle aria-label="打开侧栏">侧栏</button>
+        <button th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" class="icon-button mobile-menu-button" type="button" data-mobile-toggle aria-label="打开菜单">菜单</button>
+      </div>
+    </div>
+  </header>
+</th:block>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{modules/head :: head(title=${author.spec.displayName}, description=${author.spec.bio})}"></head>
+<body>
+  <th:block th:replace="~{modules/header :: header}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${author.spec.displayName}, subtitle=${author.spec.bio}, image=${theme.config.banner.archive_banner})}"></th:block>
+
+  <main class="site-main">
+    <section class="section-posts">
+      <div class="container container--narrow">
+        <div class="author-card" th:if="${(author.spec.avatar ?: '') != '' or (author.spec.bio ?: '') != ''}">
+          <img th:if="${(author.spec.avatar ?: '') != ''}" th:src="@{${author.spec.avatar}}" th:alt="${author.spec.displayName}">
+          <p th:if="${(author.spec.bio ?: '') != ''}" th:text="${author.spec.bio}">作者简介</p>
+        </div>
+        <div class="post-list" th:if="${posts != null and posts.total != null and posts.total gt 0}" th:attr="data-layout=${theme.config.post.list_layout ?: 'list'}">
+          <th:block th:each="post : ${posts.items}">
+            <th:block th:if="${theme.config.post.list_layout == 'cover'}" th:replace="~{modules/post-card-cover :: post-card-cover(post=${post})}"></th:block>
+            <th:block th:unless="${theme.config.post.list_layout == 'cover'}" th:replace="~{modules/post-card :: post-card(post=${post})}"></th:block>
+          </th:block>
+        </div>
+        <div class="empty-state" th:if="${posts == null or posts.total == null or posts.total le 0}">
+          <h2>这位作者还没有文章</h2>
+          <p>可以先浏览归档中的其它内容。</p>
+        </div>
+        <th:block th:replace="~{modules/pagination :: pagination(items=${posts})}"></th:block>
+      </div>
+    </section>
+  </main>
+
+  <th:block th:replace="~{modules/footer :: footer}"></th:block>
+</body>
+</html>

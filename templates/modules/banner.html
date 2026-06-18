@@ -1,0 +1,11 @@
+<th:block th:fragment="banner(title, subtitle, image)">
+  <section class="hero-banner" th:style="|--banner-height:${theme.config.banner.banner_height ?: 420}px;|">
+    <div class="hero-bg" th:with="bannerImage=${image != null and image != '' ? image : (theme.config.banner.home_banner ?: theme.config.basic.default_cover)}" th:style="|background-image:url('${bannerImage}');|"></div>
+    <div class="hero-mask" th:if="${theme.config.banner.banner_mask == null or theme.config.banner.banner_mask}"></div>
+    <div class="hero-content">
+      <p class="hero-kicker">InkNest</p>
+      <h1 th:text="${title != null and title != '' ? title : site.title}">InkNest</h1>
+      <p th:if="${subtitle != null and subtitle != ''}" th:text="${subtitle}">把灵感安放在文字的巢里</p>
+    </div>
+  </section>
+</th:block>

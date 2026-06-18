@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
+<head th:replace="~{modules/head :: head(title=${singlePage.spec.title}, description=${singlePage.status.excerpt})}"></head>
+<body>
+  <th:block th:replace="~{modules/header :: header}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${singlePage.spec.title}, subtitle=${singlePage.status.excerpt}, image=${(singlePage.spec.cover ?: '') != '' ? singlePage.spec.cover : theme.config.banner.page_banner})}"></th:block>
+
+  <main class="site-main">
+    <article class="page-single">
+      <div class="container container--narrow">
+        <div class="page-content prose" th:utext="${singlePage.content != null ? singlePage.content.content : ''}">页面内容</div>
+      </div>
+    </article>
+
+    <section th:if="${(theme.config.post.show_comments == null or theme.config.post.show_comments) and haloCommentEnabled and singlePage.spec.allowComment}" class="section-comments">
+      <div class="container container--narrow">
+        <halo:comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}" />
+      </div>
+    </section>
+  </main>
+
+  <th:block th:replace="~{modules/footer :: footer}"></th:block>
+</body>
+</html>

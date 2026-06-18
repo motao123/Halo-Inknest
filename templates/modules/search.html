@@ -1,0 +1,13 @@
+<th:block th:fragment="search">
+  <div class="search-panel" id="search-panel" aria-hidden="true">
+    <div class="search-card">
+      <button class="search-close" type="button" data-search-close aria-label="关闭搜索">×</button>
+      <h2>搜索文章</h2>
+      <form class="search-form" th:action="@{/search}" method="get">
+        <input type="search" name="keyword" placeholder="输入关键词..." autocomplete="off">
+        <button type="submit">搜索</button>
+      </form>
+      <p>如果当前 Halo 环境未启用搜索能力，请在后台安装或启用搜索相关插件。</p>
+    </div>
+  </div>
+</th:block>

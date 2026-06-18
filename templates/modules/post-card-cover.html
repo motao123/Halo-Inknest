@@ -1,0 +1,13 @@
+<th:block th:fragment="post-card-cover(post)">
+  <article class="cover-card">
+    <a th:href="@{${post.status.permalink}}" class="cover-card-link">
+      <img th:src="@{${(post.spec.cover ?: '') != '' ? post.spec.cover : theme.config.basic.default_cover}}" th:alt="${post.spec.title}" loading="lazy">
+      <span class="cover-card-mask"></span>
+      <span class="cover-card-content">
+        <span class="cover-card-meta" th:if="${post.spec.publishTime != null}" th:text="${#temporals.format(post.spec.publishTime, 'yyyy.MM.dd')}">2026.06.18</span>
+        <strong th:text="${post.spec.title}">文章标题</strong>
+        <span th:text="${post.status.excerpt != null and post.status.excerpt != '' ? post.status.excerpt : '这篇文章还没有摘要。'}">文章摘要</span>
+      </span>
+    </a>
+  </article>
+</th:block>
