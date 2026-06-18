@@ -17,9 +17,18 @@
         <a th:each="link : ${theme.config.footer.quick_links}" th:href="@{${link.url}}" th:text="${link.name}">链接</a>
       </div>
 
-      <div class="footer-social" th:if="${theme.config.social.items != null and !#lists.isEmpty(theme.config.social.items)}">
+      <div class="footer-social" th:if="${theme.config.social != null and theme.config.social.items != null and !#lists.isEmpty(theme.config.social.items)}">
         <h3>社交</h3>
-        <a th:each="item : ${theme.config.social.items}" th:href="@{${item.url}}" th:target="${item.open_in_new_tab ? '_blank' : '_self'}" rel="noopener" th:text="${item.name}">GitHub</a>
+        <div class="social-links">
+          <th:block th:each="item : ${theme.config.social.items}">
+            <a th:if="${item.platform == 'email'}" th:href="${'mailto:' + item.url}" class="social-link" th:aria-label="${(item.name ?: '') != '' ? item.name : #strings.capitalize(item.platform)}" th:title="${(item.name ?: '') != '' ? item.name : #strings.capitalize(item.platform)}">
+              <th:block th:replace="~{modules/icons :: ${item.platform}(size=18)}"></th:block>
+            </a>
+            <a th:unless="${item.platform == 'email'}" th:href="@{${item.url}}" target="_blank" rel="noopener noreferrer" class="social-link" th:aria-label="${(item.name ?: '') != '' ? item.name : #strings.capitalize(item.platform)}" th:title="${(item.name ?: '') != '' ? item.name : #strings.capitalize(item.platform)}">
+              <th:block th:replace="~{modules/icons :: ${item.platform}(size=18)}"></th:block>
+            </a>
+          </th:block>
+        </div>
       </div>
     </div>
 

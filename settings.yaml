@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-inknest-setting-v2
+  name: theme-inknest-setting-v3
 spec:
   forms:
     - group: basic
@@ -88,30 +88,51 @@ spec:
       formSchema:
         - $formkit: repeater
           name: items
-          label: 社交链接
+          label: 社交媒体
           value: []
           children:
-            - $formkit: text
-              name: name
-              label: 名称
-              value: "GitHub"
-            - $formkit: text
-              name: icon
-              label: 图标文字
-              value: "G"
+            - $formkit: select
+              name: platform
+              label: 平台
+              value: github
+              options:
+                - label: GitHub
+                  value: github
+                - label: Twitter / X
+                  value: twitter
+                - label: 微博
+                  value: weibo
+                - label: 哔哩哔哩
+                  value: bilibili
+                - label: 知乎
+                  value: zhihu
+                - label: Telegram
+                  value: telegram
+                - label: 微信
+                  value: wechat
+                - label: QQ
+                  value: qq
+                - label: 邮箱
+                  value: email
+                - label: RSS
+                  value: rss
+                - label: 掘金
+                  value: juejin
+                - label: LinkedIn
+                  value: linkedin
+                - label: 豆瓣
+                  value: douban
+                - label: 个人网站
+                  value: website
             - $formkit: text
               name: url
-              label: 链接
+              label: 链接地址
               placeholder: https://...
-            - $formkit: attachment
-              name: qrcode
-              label: 二维码
-              accepts:
-                - "image/*"
-            - $formkit: checkbox
-              name: open_in_new_tab
-              label: 新窗口打开
-              value: true
+              validation: "required"
+            - $formkit: text
+              name: name
+              label: 显示名称（可选）
+              placeholder: 留空则使用平台名称
 
     - group: footer
       label: 页脚设置
@@ -144,14 +165,11 @@ spec:
         - $formkit: text
           name: gongan_url
           label: 公安联网备案链接
+          value: "https://beian.mps.gov.cn/#/query/webSearch"
         - $formkit: checkbox
           name: show_theme_credit
           label: 显示主题版权
           value: true
-        - $formkit: checkbox
-          name: show_runtime
-          label: 显示运行时间
-          value: false
 
     - group: features
       label: 前端增强
@@ -176,10 +194,6 @@ spec:
           name: enable_lazyload
           label: 图片懒加载
           value: true
-        - $formkit: checkbox
-          name: enable_heart_effect
-          label: 心形飘落动效
-          value: false
         - $formkit: checkbox
           name: enable_back_to_top
           label: 返回顶部
