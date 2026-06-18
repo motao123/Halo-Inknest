@@ -8,7 +8,7 @@
 
   <main class="site-main">
     <article class="post-single">
-      <div class="container" th:classappend="${(theme.config.sidebar.enabled == null or theme.config.sidebar.enabled) and theme.config.sidebar.mode == 'fixed'} ? ' layout-shell' : ''">
+      <div class="container" th:classappend="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'fixed'} ? ' layout-shell' : ''">
         <div class="content-shell post-content-shell">
           <header class="post-header">
             <div class="post-meta post-meta--single">
@@ -35,7 +35,7 @@
           </div>
         </div>
 
-        <th:block th:if="${(theme.config.sidebar.enabled == null or theme.config.sidebar.enabled) and theme.config.sidebar.mode == 'fixed'}" th:replace="~{modules/sidebar :: sidebar(extraClass='site-sidebar--fixed')}"></th:block>
+        <th:block th:if="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'fixed'}" th:replace="~{modules/sidebar :: sidebar(extraClass='site-sidebar--fixed')}"></th:block>
       </div>
     </article>
 

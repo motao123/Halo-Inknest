@@ -15,7 +15,7 @@
 
       <div class="header-actions">
         <button th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" class="icon-button" type="button" data-search-toggle aria-label="打开搜索">搜索</button>
-        <button th:if="${(theme.config.navigation.show_sliding_sidebar == null or theme.config.navigation.show_sliding_sidebar) and (theme.config.sidebar.enabled == null or theme.config.sidebar.enabled) and theme.config.sidebar.mode == 'drawer'}" class="icon-button" type="button" data-sidebar-toggle aria-label="打开侧栏">侧栏</button>
+        <button th:if="${theme.config.navigation.show_sliding_sidebar == true and theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'drawer'}" class="icon-button" type="button" data-sidebar-toggle aria-label="打开侧栏">侧栏</button>
         <button th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" class="icon-button mobile-menu-button" type="button" data-mobile-toggle aria-label="打开菜单">菜单</button>
       </div>
     </div>

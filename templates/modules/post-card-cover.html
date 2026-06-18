@@ -1,13 +1,17 @@
 <th:block th:fragment="post-card-cover(post)">
-  <article class="cover-card">
-    <a th:href="@{${post.status.permalink}}" class="cover-card-link">
-      <img th:src="@{${(post.spec.cover ?: '') != '' ? post.spec.cover : theme.config.basic.default_cover}}" th:alt="${post.spec.title}" loading="lazy">
-      <span class="cover-card-mask"></span>
-      <span class="cover-card-content">
-        <span class="cover-card-meta" th:if="${post.spec.publishTime != null}" th:text="${#temporals.format(post.spec.publishTime, 'yyyy.MM.dd')}">2026.06.18</span>
-        <strong th:text="${post.spec.title}">文章标题</strong>
-        <span th:text="${post.status.excerpt != null and post.status.excerpt != '' ? post.status.excerpt : '这篇文章还没有摘要。'}">文章摘要</span>
-      </span>
-    </a>
+  <article class="cover-card post cover">
+    <div class="post-wrapper">
+      <a class="cover-link" th:href="@{${post.status.permalink}}" aria-label="查看文章"></a>
+      <div class="entry-wrapper">
+        <div class="entry-meta">
+          <a th:if="${(theme.config.post.show_category == null or theme.config.post.show_category) and post.categories != null and !#lists.isEmpty(post.categories)}" th:href="@{${post.categories[0].status.permalink}}" th:text="${post.categories[0].spec.displayName}">分类</a>
+          <time th:if="${post.spec.publishTime != null}" th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}" th:text="${#temporals.format(post.spec.publishTime, 'yyyy.MM.dd')}">2026.06.18</time>
+        </div>
+        <h2><a th:href="@{${post.status.permalink}}" th:text="${post.spec.title}">文章标题</a></h2>
+      </div>
+      <div class="jarallax-container" th:if="${(post.spec.cover ?: '') != '' or (theme.config.basic.default_cover ?: '') != ''}">
+        <img th:src="${(post.spec.cover ?: '') != '' ? post.spec.cover : theme.config.basic.default_cover}" th:alt="${post.spec.title}" loading="lazy">
+      </div>
+    </div>
   </article>
 </th:block>

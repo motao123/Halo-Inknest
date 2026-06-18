@@ -2,7 +2,7 @@
   <th:block th:replace="~{modules/search :: search}"></th:block>
   <th:block th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" th:replace="~{modules/mobile-menu :: mobile-menu}"></th:block>
 
-  <div class="sidebar-drawer" id="sidebar-drawer" aria-hidden="true" th:if="${(theme.config.sidebar.enabled == null or theme.config.sidebar.enabled) and theme.config.sidebar.mode == 'drawer'}">
+  <div class="sidebar-drawer" id="sidebar-drawer" aria-hidden="true" th:if="${theme.config.navigation.show_sliding_sidebar == true and theme.config.sidebar.enabled == true and theme.config.sidebar.mode == 'drawer'}">
     <button class="drawer-close" type="button" data-sidebar-close aria-label="关闭侧栏">×</button>
     <th:block th:replace="~{modules/sidebar :: sidebar(extraClass='site-sidebar--drawer')}"></th:block>
   </div>

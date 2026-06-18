@@ -1,5 +1,5 @@
 <th:block th:fragment="sidebar(extraClass)">
-  <aside th:class="${extraClass != null and extraClass != '' ? 'site-sidebar ' + extraClass : 'site-sidebar'}" aria-label="侧边栏">
+  <aside th:if="${theme.config.sidebar.enabled == true and theme.config.sidebar.mode != 'none'}" th:class="${extraClass != null and extraClass != '' ? 'site-sidebar ' + extraClass : 'site-sidebar'}" aria-label="侧边栏">
     <th:block th:if="${theme.config.sidebar.widgets != null and !#lists.isEmpty(theme.config.sidebar.widgets)}">
       <th:block th:each="widget : ${theme.config.sidebar.widgets}">
         <section class="sidebar-widget" th:if="${widget.value == 'site-info'}">
