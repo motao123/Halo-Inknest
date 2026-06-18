@@ -17,13 +17,15 @@
         <a th:each="link : ${theme.config.footer.quick_links}" th:href="@{${link.url}}" th:text="${link.name}">链接</a>
       </div>
 
-      <div class="footer-links" th:if="${linkFinder != null and linkFinder.count() > 0}">
+      <div class="footer-links footer-friend-links" th:if="${linkFinder != null and linkFinder.count() > 0}">
         <h3>友情链接</h3>
-        <th:block th:each="group : ${linkFinder.groupBy()}">
-          <th:block th:if="${group.links != null and !#lists.isEmpty(group.links)}">
-            <a th:each="link : ${group.links}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:text="${link.spec.displayName}">友情链接</a>
+        <div class="footer-link-row">
+          <th:block th:each="group : ${linkFinder.groupBy()}">
+            <th:block th:if="${group.links != null and !#lists.isEmpty(group.links)}">
+              <a th:each="link : ${group.links}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:text="${link.spec.displayName}">友情链接</a>
+            </th:block>
           </th:block>
-        </th:block>
+        </div>
       </div>
 
       <div class="footer-social" th:if="${theme.config.social != null and theme.config.social.items != null and !#lists.isEmpty(theme.config.social.items)}">
