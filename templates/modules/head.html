@@ -5,8 +5,17 @@
   <title th:text="${title != null and title != '' ? title + ' - ' + site.title : site.title}">InkNest</title>
   <meta name="description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
   <link rel="icon" th:if="${theme.config.basic.favicon != null and theme.config.basic.favicon != ''}" th:href="@{${theme.config.basic.favicon}}">
+  <meta name="theme-color" content="#a8693d">
+  <meta property="og:site_name" th:content="${site.title}">
+  <meta property="og:type" content="website">
+  <meta property="og:title" th:content="${title != null and title != '' ? title + ' - ' + site.title : site.title}">
+  <meta property="og:description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
+  <meta property="og:image" th:content="@{${(theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png'}}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" th:content="${title != null and title != '' ? title + ' - ' + site.title : site.title}">
+  <meta name="twitter:description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
+  <link rel="alternate" type="application/rss+xml" title="RSS" th:href="@{/feed.xml}">
   <link rel="stylesheet" th:href="@{/assets/css/style.css(v=${theme.spec.version})}">
-  <link rel="stylesheet" th:if="${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}" th:href="@{/assets/lib/fancybox/fancybox.css(v=${theme.spec.version})}">
   <halo:head />
   <th:block th:utext="${theme.config.custom_code.custom_head}"></th:block>
   <style th:if="${theme.config.custom_code.custom_css != null and theme.config.custom_code.custom_css != ''}" th:utext="${theme.config.custom_code.custom_css}"></style>

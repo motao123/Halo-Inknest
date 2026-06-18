@@ -29,6 +29,7 @@ spec:
         - $formkit: attachment
           name: global_banner
           label: 全局 Banner
+          help: 建议使用横向图片，推荐宽度 1600px 以上
           accepts:
             - "image/*"
     - group: navigation
@@ -42,6 +43,24 @@ spec:
           name: show_mobile_menu
           label: 启用移动菜单
           value: true
+        - $formkit: text
+          name: search_action
+          label: 搜索路径
+          value: "/search"
+          validation: "required"
+        - $formkit: text
+          name: search_param
+          label: 搜索参数名
+          value: "keyword"
+          validation: "required|matches:/^[A-Za-z0-9_-]+$/"
+        - $formkit: text
+          name: search_hint
+          label: 搜索提示文案
+          value: "如果当前 Halo 环境未启用搜索能力，请在后台安装或启用搜索相关插件。"
+        - $formkit: checkbox
+          name: enable_search_shortcut
+          label: 启用 / 快捷键打开搜索
+          value: true
 
     - group: post
       label: 文章设置
@@ -50,6 +69,7 @@ spec:
           name: excerpt_length
           label: 摘要字数
           value: 120
+          validation: "min:20|max:300"
         - $formkit: checkbox
           name: show_category
           label: 显示分类
@@ -127,7 +147,8 @@ spec:
             - $formkit: text
               name: url
               label: 链接地址
-              placeholder: https://...
+              placeholder: https://...；邮箱平台只填邮箱地址
+              help: "选择邮箱平台时只填写邮箱地址，不要填写 mailto:"
               validation: "required"
             - $formkit: text
               name: name
@@ -154,9 +175,11 @@ spec:
             - $formkit: text
               name: name
               label: 名称
+              validation: "required"
             - $formkit: text
               name: url
               label: 链接
+              validation: "required"
         - $formkit: text
           name: icp_number
           label: ICP 备案号
@@ -164,6 +187,7 @@ spec:
           name: icp_url
           label: ICP 备案链接
           value: "https://beian.miit.gov.cn/"
+          validation: "url"
         - $formkit: text
           name: gongan_number
           label: 公安联网备案号
@@ -171,6 +195,7 @@ spec:
           name: gongan_url
           label: 公安联网备案链接
           value: "https://beian.mps.gov.cn/#/query/webSearch"
+          validation: "url"
         - $formkit: checkbox
           name: show_theme_credit
           label: 显示主题版权

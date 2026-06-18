@@ -40,6 +40,16 @@
   };
 
   const getFocusable = (panel) => $$(focusableSelector, panel).filter((item) => item.offsetParent !== null || item === document.activeElement);
+  const inertTargets = $$('body > *').filter((item) => !item.matches('.search-panel, .mobile-menu, script, style'));
+  const setBackgroundInert = (inert) => {
+    inertTargets.forEach((item) => {
+      if (inert) {
+        item.setAttribute('inert', '');
+      } else {
+        item.removeAttribute('inert');
+      }
+    });
+  };
 
   const openPanel = (panel, trigger) => {
     if (!panel) return;
@@ -49,6 +59,7 @@
     panel.classList.add('is-open');
     panel.setAttribute('aria-hidden', 'false');
     document.body.classList.add('panel-open');
+    setBackgroundInert(true);
     setExpanded(activeTrigger, true);
 
     const focusTarget = $('[type="search"]', panel) || $('[data-search-close], [data-mobile-close]', panel) || getFocusable(panel)[0];
@@ -61,6 +72,7 @@
     panel.setAttribute('aria-hidden', 'true');
     if (!$('.search-panel.is-open') && !$('.mobile-menu.is-open')) {
       document.body.classList.remove('panel-open');
+      setBackgroundInert(false);
     }
     if (panel === activePanel) {
       setExpanded(activeTrigger, false);
@@ -87,6 +99,11 @@
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
       [searchPanel, mobileMenu].forEach(closePanel);
+      return;
+    }
+    if (event.key === '/' && isEnabled('searchShortcut') && searchPanel && !activePanel && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
+      event.preventDefault();
+      openPanel(searchPanel, $('[data-search-toggle]'));
       return;
     }
     if (event.key !== 'Tab' || !activePanel) return;
@@ -217,7 +234,16 @@
     }
   });
 
-  if (window.Fancybox) {
-    Fancybox.bind('.prose img', {});
+  const proseImages = $$('.prose img');
+  if (isEnabled('fancybox') && proseImages.length && config.fancyboxCss && config.fancyboxJs) {
+    const stylesheet = document.createElement('link');
+    stylesheet.rel = 'stylesheet';
+    stylesheet.href = config.fancyboxCss;
+    document.head.appendChild(stylesheet);
+
+    const script = document.createElement('script');
+    script.src = config.fancyboxJs;
+    script.onload = () => window.Fancybox?.bind('.prose img', {});
+    document.body.appendChild(script);
   }
 })();

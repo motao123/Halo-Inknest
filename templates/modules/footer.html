@@ -63,10 +63,13 @@
     window.InkNestConfig = {
       codeCopy: /*[[${theme.config.features.enable_code_copy == null or theme.config.features.enable_code_copy}]]*/ true,
       smoothScroll: /*[[${theme.config.features.enable_smooth_scroll == null or theme.config.features.enable_smooth_scroll}]]*/ true,
-      lazyload: /*[[${theme.config.features.enable_lazyload == null or theme.config.features.enable_lazyload}]]*/ true
+      lazyload: /*[[${theme.config.features.enable_lazyload == null or theme.config.features.enable_lazyload}]]*/ true,
+      fancybox: /*[[${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}]]*/ true,
+      searchShortcut: /*[[${theme.config.navigation.enable_search_shortcut == null or theme.config.navigation.enable_search_shortcut}]]*/ true,
+      fancyboxCss: /*[[@{/assets/lib/fancybox/fancybox.css(v=${theme.spec.version})}]]*/ '',
+      fancyboxJs: /*[[@{/assets/lib/fancybox/fancybox.js(v=${theme.spec.version})}]]*/ ''
     };
   </script>
-  <script th:if="${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}" th:src="@{/assets/lib/fancybox/fancybox.js(v=${theme.spec.version})}"></script>
   <script th:src="@{/assets/js/main.js(v=${theme.spec.version})}"></script>
   <script th:if="${theme.config.custom_code.custom_js != null and theme.config.custom_code.custom_js != ''}" th:inline="javascript" th:utext="${theme.config.custom_code.custom_js}"></script>
   <th:block th:utext="${theme.config.custom_code.custom_footer}"></th:block>
