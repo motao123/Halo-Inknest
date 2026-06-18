@@ -4,7 +4,7 @@ metadata:
   name: theme-inknest-configmap
 data:
   basic: |
-    {"site_logo":"","footer_logo":"","site_description":"把灵感安放在文字的巢里","favicon":"","global_banner":"/themes/theme-inknest/assets/images/screenshot.png"}
+    {"site_logo":"","footer_logo":"","site_description":"把灵感安放在文字的巢里","favicon":"","global_banner":"/themes/theme-inknest/assets/images/default-banner.png"}
   navigation: |
     {"show_search":true,"show_mobile_menu":true}
   post: |
@@ -12,7 +12,7 @@ data:
   social: |
     {"items":[]}
   footer: |
-    {"footer_description":"","quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"https://beian.mps.gov.cn/#/query/webSearch","show_theme_credit":true}
+    {"quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"https://beian.mps.gov.cn/#/query/webSearch","show_theme_credit":true}
   features: |
     {"enable_fancybox":true,"enable_reading_progress":true,"enable_code_copy":true,"enable_smooth_scroll":true,"enable_lazyload":true,"enable_back_to_top":true}
   custom_code: |

@@ -1,5 +1,5 @@
 <th:block th:fragment="banner(title, subtitle, image)">
-  <section class="hero-banner" th:with="bannerImage=${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/screenshot.png')}">
+  <section class="hero-banner" th:with="bannerImage=${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}">
     <div class="hero-bg">
       <img th:if="${bannerImage != null and bannerImage != ''}" th:src="@{${bannerImage}}" th:alt="${title != null and title != '' ? title : site.title}">
     </div>

@@ -137,10 +137,6 @@ spec:
     - group: footer
       label: 页脚设置
       formSchema:
-        - $formkit: textarea
-          name: footer_description
-          label: 页脚描述
-          value: ""
         - $formkit: repeater
           name: quick_links
           label: 快捷链接
