@@ -7,8 +7,6 @@
         <span th:text="${site.title}">InkNest</span>
       </a>
       <nav class="mobile-nav" th:with="menu=${menuFinder.getPrimary()}">
-        <a th:href="@{/}">首页</a>
-        <a th:href="@{/archives}">归档</a>
         <th:block th:if="${menu != null and menu.menuItems != null}">
           <a th:each="menuItem : ${menu.menuItems}" th:href="@{${menuItem.status.href}}" th:text="${menuItem.status.displayName}" th:target="${menuItem.spec.target != null and menuItem.spec.target.value != null ? menuItem.spec.target.value : '_self'}" th:rel="${menuItem.spec.target != null and menuItem.spec.target.value == '_blank' ? 'noopener noreferrer' : null}">菜单</a>
         </th:block>

@@ -35,14 +35,6 @@ spec:
     - group: navigation
       label: 导航设置
       formSchema:
-        - $formkit: text
-          name: main_menu
-          label: 主菜单名称
-          value: "primary"
-        - $formkit: text
-          name: mobile_menu
-          label: 移动端菜单名称
-          value: "primary"
         - $formkit: checkbox
           name: show_search
           label: 显示搜索入口

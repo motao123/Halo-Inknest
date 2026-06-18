@@ -6,7 +6,7 @@ data:
   basic: |
     {"site_logo":"","footer_logo":"","site_description":"把灵感安放在文字的巢里","favicon":"","default_cover":"/themes/theme-inknest/assets/images/screenshot.png"}
   navigation: |
-    {"main_menu":"primary","mobile_menu":"primary","show_search":true,"show_mobile_menu":true,"show_sliding_sidebar":true}
+    {"show_search":true,"show_mobile_menu":true,"show_sliding_sidebar":true}
   banner: |
     {"home_banner":"/themes/theme-inknest/assets/images/screenshot.png","post_banner":"/themes/theme-inknest/assets/images/screenshot.png","page_banner":"/themes/theme-inknest/assets/images/screenshot.png","archive_banner":"/themes/theme-inknest/assets/images/screenshot.png","mobile_banner":"","banner_mask":true,"banner_random_enabled":false,"banner_random_images":[],"banner_height":420}
   post: |
