@@ -10,7 +10,7 @@ data:
   banner: |
     {"home_banner":"/themes/theme-inknest/assets/images/screenshot.png","post_banner":"/themes/theme-inknest/assets/images/screenshot.png","page_banner":"/themes/theme-inknest/assets/images/screenshot.png","archive_banner":"/themes/theme-inknest/assets/images/screenshot.png","mobile_banner":"","banner_mask":true,"banner_random_enabled":false,"banner_random_images":[],"banner_height":420}
   post: |
-    {"list_layout":"list","excerpt_length":120,"show_cover":true,"show_category":true,"show_tags":true,"show_visit_count":true,"show_reading_time":true,"show_toc":true,"show_share":true,"show_prev_next":true,"show_comments":true}
+    {"excerpt_length":120,"show_cover":true,"show_category":true,"show_tags":true,"show_visit_count":true,"show_reading_time":true,"show_toc":true,"show_share":true,"show_prev_next":true,"show_comments":true}
   sidebar: |
     {"enabled":true,"mode":"drawer","widgets":[{"value":"site-info"},{"value":"recent-posts"},{"value":"categories"},{"value":"tags"}],"recent_post_count":5,"random_post_count":5}
   social: |

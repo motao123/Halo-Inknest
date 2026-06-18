@@ -12,10 +12,9 @@
           <img th:if="${(author.spec.avatar ?: '') != ''}" th:src="@{${author.spec.avatar}}" th:alt="${author.spec.displayName}">
           <p th:if="${(author.spec.bio ?: '') != ''}" th:text="${author.spec.bio}">作者简介</p>
         </div>
-        <div class="post-list" th:if="${posts != null and posts.total != null and posts.total gt 0}" th:with="listLayout=${theme.config.post.list_layout ?: 'list'}" th:attr="data-layout=${listLayout}">
+        <div class="post-list" th:if="${posts != null and posts.total != null and posts.total gt 0}" data-layout="list">
           <th:block th:each="post : ${posts.items}">
-            <th:block th:if="${listLayout == 'cover'}" th:replace="~{modules/post-card-cover :: post-card-cover(post=${post})}"></th:block>
-            <th:block th:unless="${listLayout == 'cover'}" th:replace="~{modules/post-card :: post-card(post=${post}, layout=${listLayout})}"></th:block>
+            <th:block th:replace="~{modules/post-card :: post-card(post=${post})}"></th:block>
           </th:block>
         </div>
         <div class="empty-state" th:if="${posts == null or posts.total == null or posts.total le 0}">

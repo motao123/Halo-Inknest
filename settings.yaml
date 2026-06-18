@@ -113,17 +113,6 @@ spec:
     - group: post
       label: 文章设置
       formSchema:
-        - $formkit: select
-          name: list_layout
-          label: 文章列表布局
-          value: "list"
-          options:
-            - label: 经典列表
-              value: list
-            - label: 封面卡片
-              value: cover
-            - label: 双列网格
-              value: grid
         - $formkit: number
           name: excerpt_length
           label: 摘要字数
