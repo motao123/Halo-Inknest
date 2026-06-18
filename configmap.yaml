@@ -12,7 +12,7 @@ data:
   social: |
     {"items":[]}
   footer: |
-    {"quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"https://beian.mps.gov.cn/#/query/webSearch","show_theme_credit":true}
+    {"show_friend_links":true,"friend_links_limit":12,"quick_links":[],"icp_number":"","icp_url":"https://beian.miit.gov.cn/","gongan_number":"","gongan_url":"https://beian.mps.gov.cn/#/query/webSearch","show_theme_credit":true}
   features: |
     {"enable_fancybox":true,"enable_reading_progress":true,"enable_code_copy":true,"enable_smooth_scroll":true,"enable_lazyload":true,"enable_back_to_top":true}
   custom_code: |

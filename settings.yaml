@@ -137,6 +137,15 @@ spec:
     - group: footer
       label: 页脚设置
       formSchema:
+        - $formkit: checkbox
+          name: show_friend_links
+          label: 页脚显示友情链接
+          value: true
+        - $formkit: number
+          name: friend_links_limit
+          label: 每组页脚友情链接数量
+          value: 12
+          validation: "min:1|max:50"
         - $formkit: repeater
           name: quick_links
           label: 快捷链接

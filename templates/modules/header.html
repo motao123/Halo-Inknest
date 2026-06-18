@@ -1,5 +1,5 @@
 <th:block th:fragment="header">
-  <header class="site-header" id="site-header">
+  <header class="site-header" id="site-header" th:classappend="${theme.config.navigation.show_mobile_menu == false} ? ' mobile-menu-disabled' : ''">
     <div class="header-inner">
       <a class="site-brand" th:href="@{/}" aria-label="返回首页">
         <img class="site-logo" th:if="${theme.config.basic.site_logo != null and theme.config.basic.site_logo != ''}" th:src="@{${theme.config.basic.site_logo}}" th:alt="${site.title}">

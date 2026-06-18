@@ -1,7 +1,7 @@
 <th:block th:fragment="banner(title, subtitle, image)">
   <section class="hero-banner" th:with="bannerImage=${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}">
     <div class="hero-bg">
-      <img th:if="${bannerImage != null and bannerImage != ''}" th:src="@{${bannerImage}}" th:alt="${title != null and title != '' ? title : site.title}">
+      <img th:if="${bannerImage != null and bannerImage != ''}" th:src="@{${bannerImage}}" alt="" aria-hidden="true" loading="eager" decoding="async" fetchpriority="high">
     </div>
     <div class="hero-mask"></div>
     <div class="hero-content">

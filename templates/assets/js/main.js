@@ -6,12 +6,28 @@
   const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
   const header = $('#site-header');
-  const updateHeader = () => {
-    if (!header) return;
-    header.classList.toggle('is-scrolled', window.scrollY > 20);
+  const scrollTasks = [];
+  let scrollTicking = false;
+  const runScrollTasks = () => {
+    scrollTicking = false;
+    scrollTasks.forEach((task) => task());
   };
-  updateHeader();
-  window.addEventListener('scroll', updateHeader, { passive: true });
+  const requestScrollUpdate = () => {
+    if (scrollTicking) return;
+    scrollTicking = true;
+    requestAnimationFrame(runScrollTasks);
+  };
+  const addScrollTask = (task) => {
+    scrollTasks.push(task);
+    task();
+  };
+
+  if (header) {
+    addScrollTask(() => {
+      header.classList.toggle('is-scrolled', window.scrollY > 20);
+    });
+  }
+  window.addEventListener('scroll', requestScrollUpdate, { passive: true });
 
   document.documentElement.classList.toggle('smooth-scroll', isEnabled('smoothScroll') && !prefersReducedMotion);
 
@@ -91,26 +107,22 @@
 
   const backToTop = $('[data-back-to-top]');
   if (backToTop) {
-    const updateBackToTop = () => {
+    addScrollTask(() => {
       const visible = window.scrollY > 420;
       backToTop.classList.toggle('is-visible', visible);
       backToTop.setAttribute('aria-hidden', visible ? 'false' : 'true');
       backToTop.setAttribute('tabindex', visible ? '0' : '-1');
-    };
-    updateBackToTop();
-    window.addEventListener('scroll', updateBackToTop, { passive: true });
+    });
     backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: isEnabled('smoothScroll') && !prefersReducedMotion ? 'smooth' : 'auto' }));
   }
 
   const readingProgress = $('#reading-progress');
   if (readingProgress) {
-    const updateProgress = () => {
+    addScrollTask(() => {
       const height = document.documentElement.scrollHeight - window.innerHeight;
       const progress = height > 0 ? Math.min(100, (window.scrollY / height) * 100) : 0;
       readingProgress.style.width = progress + '%';
-    };
-    updateProgress();
-    window.addEventListener('scroll', updateProgress, { passive: true });
+    });
   }
 
   const postContent = $('#post-content');
@@ -125,23 +137,40 @@
   if (postContent && tocList) {
     const headings = $$('h2, h3', postContent).filter((heading) => heading.textContent.trim());
     if (headings.length) {
-      headings.forEach((heading, index) => {
-        if (!heading.id) heading.id = 'heading-' + index;
+      const usedIds = new Set($$('[id]').map((item) => item.id));
+      const toSlug = (text) => text.trim().toLowerCase().replace(/\s+/g, '-').replace(/[^\w一-龥-]/g, '') || 'heading';
+      const uniqueId = (base) => {
+        let id = base;
+        let index = 2;
+        while (usedIds.has(id)) {
+          id = `${base}-${index}`;
+          index += 1;
+        }
+        usedIds.add(id);
+        return id;
+      };
+
+      headings.forEach((heading) => {
+        if (!heading.id) heading.id = uniqueId(toSlug(heading.textContent));
         const link = document.createElement('a');
-        link.href = '#' + heading.id;
+        link.href = '#' + encodeURIComponent(heading.id);
         link.textContent = heading.textContent.trim();
         link.className = 'toc-link toc-link--' + heading.tagName.toLowerCase();
         tocList.appendChild(link);
       });
 
       const tocLinks = $$('.toc-link', tocList);
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          tocLinks.forEach((link) => link.classList.toggle('is-active', link.getAttribute('href') === '#' + entry.target.id));
-        });
-      }, { rootMargin: '-20% 0px -65% 0px' });
-      headings.forEach((heading) => observer.observe(heading));
+      if ('IntersectionObserver' in window) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (!entry.isIntersecting) return;
+            tocLinks.forEach((link) => link.classList.toggle('is-active', decodeURIComponent(link.hash.slice(1)) === entry.target.id));
+          });
+        }, { rootMargin: '-20% 0px -65% 0px' });
+        headings.forEach((heading) => observer.observe(heading));
+      } else {
+        tocLinks[0]?.classList.add('is-active');
+      }
     } else {
       $('#post-toc')?.remove();
     }

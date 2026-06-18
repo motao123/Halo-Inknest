@@ -1,7 +1,7 @@
 <th:block th:fragment="pagination(items)">
   <nav class="pagination" th:if="${items != null and (items.hasPrevious() or items.hasNext())}" aria-label="分页">
-    <a class="page-link" th:if="${items.hasPrevious()}" th:href="@{${items.prevUrl}}">上一页</a>
-    <span class="page-current"><span th:text="${items.page}">1</span> / <span th:text="${items.totalPages}">1</span></span>
-    <a class="page-link" th:if="${items.hasNext()}" th:href="@{${items.nextUrl}}">下一页</a>
+    <a class="page-link" th:if="${items.hasPrevious()}" th:href="@{${items.prevUrl}}" rel="prev">上一页</a>
+    <span class="page-current" aria-current="page"><span th:text="${items.page}">1</span> / <span th:text="${items.totalPages}">1</span></span>
+    <a class="page-link" th:if="${items.hasNext()}" th:href="@{${items.nextUrl}}" rel="next">下一页</a>
   </nav>
 </th:block>

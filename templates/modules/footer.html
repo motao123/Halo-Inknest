@@ -15,12 +15,12 @@
         <a th:each="link : ${theme.config.footer.quick_links}" th:href="@{${link.url}}" th:text="${link.name}">链接</a>
       </div>
 
-      <div class="footer-links footer-friend-links" th:if="${linkFinder != null and linkFinder.count() > 0}">
+      <div class="footer-links footer-friend-links" th:if="${(theme.config.footer.show_friend_links == null or theme.config.footer.show_friend_links) and linkFinder != null and linkFinder.count() > 0}" th:with="friendLinkLimit=${theme.config.footer.friend_links_limit ?: 12}">
         <h3>友情链接</h3>
         <div class="footer-link-row">
           <th:block th:each="group : ${linkFinder.groupBy()}">
             <th:block th:if="${group.links != null and !#lists.isEmpty(group.links)}">
-              <a th:each="link : ${group.links}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:text="${link.spec.displayName}">友情链接</a>
+              <a th:each="link, linkStat : ${group.links}" th:if="${linkStat.count <= friendLinkLimit}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:text="${link.spec.displayName}">友情链接</a>
             </th:block>
           </th:block>
         </div>

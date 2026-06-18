@@ -3,7 +3,7 @@
     <div class="post-time-img no-thumbnail">
       <div class="post-date" th:if="${post.spec.publishTime != null}">
         <span th:text="${#temporals.format(post.spec.publishTime, 'dd')}">18</span>
-        <small th:text="${#temporals.format(post.spec.publishTime, 'yyyy年-MM月')}">2026年-06月</small>
+        <small th:text="${#temporals.format(post.spec.publishTime, 'yyyy年MM月')}">2026年06月</small>
       </div>
       <div class="post-date" th:unless="${post.spec.publishTime != null}">
         <span>--</span>
