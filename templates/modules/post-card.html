@@ -26,9 +26,6 @@
         <span th:if="${(theme.config.post.show_visit_count == null or theme.config.post.show_visit_count) and post.stats != null}">浏览 <span th:text="${post.stats.visit}">0</span></span>
       </div>
       <p class="post-excerpt" th:text="${post.status.excerpt != null and post.status.excerpt != '' ? post.status.excerpt : '这篇文章还没有摘要。'}">文章摘要</p>
-      <div class="post-tags" th:if="${(theme.config.post.show_tags == null or theme.config.post.show_tags) and post.tags != null and !#lists.isEmpty(post.tags)}">
-        <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="|#${tag.spec.displayName}|">#标签</a>
-      </div>
     </div>
   </article>
 </th:block>
