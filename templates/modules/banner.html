@@ -1,8 +1,8 @@
-<th:block th:fragment="banner(title, subtitle, image)">
-  <section class="hero-banner" th:with="bannerImage=${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}">
+<th:block th:fragment="banner(title, subtitle, image, priority)">
+  <section class="hero-banner" th:with="bannerImage=${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}, highPriority=${priority == null or priority}">
     <picture class="hero-bg">
       <source th:if="${bannerImage == '/themes/theme-inknest/assets/images/default-banner.png'}" th:srcset="@{/assets/images/default-banner.webp}" type="image/webp">
-      <img th:if="${bannerImage != null and bannerImage != ''}" th:src="@{${bannerImage}}" alt="" aria-hidden="true" loading="eager" decoding="async" fetchpriority="high">
+      <img th:if="${bannerImage != null and bannerImage != ''}" th:src="@{${bannerImage}}" alt="" aria-hidden="true" width="1600" height="600" decoding="async" th:attr="loading=${highPriority ? 'eager' : 'lazy'},fetchpriority=${highPriority ? 'high' : 'auto'}">
     </picture>
     <div class="hero-mask"></div>
     <div class="hero-content">

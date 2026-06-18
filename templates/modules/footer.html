@@ -1,5 +1,4 @@
 <th:block th:fragment="footer">
-  <th:block th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" th:replace="~{modules/search :: search}"></th:block>
   <th:block th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" th:replace="~{modules/mobile-menu :: mobile-menu}"></th:block>
 
   <button th:if="${theme.config.features.enable_back_to_top == null or theme.config.features.enable_back_to_top}" class="back-to-top" type="button" data-back-to-top aria-label="返回顶部" aria-hidden="true" tabindex="-1">↑</button>
@@ -66,6 +65,7 @@
       lazyload: /*[[${theme.config.features.enable_lazyload == null or theme.config.features.enable_lazyload}]]*/ true,
       fancybox: /*[[${theme.config.features.enable_fancybox == null or theme.config.features.enable_fancybox}]]*/ true,
       searchShortcut: /*[[${theme.config.navigation.enable_search_shortcut == null or theme.config.navigation.enable_search_shortcut}]]*/ true,
+      searchEnabled: /*[[${(theme.config.navigation.show_search == null or theme.config.navigation.show_search) and pluginFinder.available('PluginSearchWidget')}]]*/ true,
       fancyboxCss: /*[[@{/assets/lib/fancybox/fancybox.css(v=${theme.spec.version})}]]*/ '',
       fancyboxJs: /*[[@{/assets/lib/fancybox/fancybox.js(v=${theme.spec.version})}]]*/ ''
     };

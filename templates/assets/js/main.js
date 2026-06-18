@@ -40,9 +40,12 @@
   };
 
   const getFocusable = (panel) => $$(focusableSelector, panel).filter((item) => item.offsetParent !== null || item === document.activeElement);
-  const inertTargets = $$('body > *').filter((item) => !item.matches('.search-panel, .mobile-menu, script, style'));
+  const getInertTargets = () => $$('body > *').filter((item) => !item.matches('.mobile-menu, script, style'));
+  const containsActivePanel = (item) => activePanel && item.contains(activePanel);
+  const isActivePanel = (item) => item === activePanel;
+  const inertTargets = () => getInertTargets().filter((item) => !isActivePanel(item) && !containsActivePanel(item));
   const setBackgroundInert = (inert) => {
-    inertTargets.forEach((item) => {
+    inertTargets().forEach((item) => {
       if (inert) {
         item.setAttribute('inert', '');
       } else {
@@ -62,7 +65,7 @@
     setBackgroundInert(true);
     setExpanded(activeTrigger, true);
 
-    const focusTarget = $('[type="search"]', panel) || $('[data-search-close], [data-mobile-close]', panel) || getFocusable(panel)[0];
+    const focusTarget = $('[data-mobile-close]', panel) || getFocusable(panel)[0];
     focusTarget?.focus({ preventScroll: true });
   };
 
@@ -70,7 +73,7 @@
     if (!panel) return;
     panel.classList.remove('is-open');
     panel.setAttribute('aria-hidden', 'true');
-    if (!$('.search-panel.is-open') && !$('.mobile-menu.is-open')) {
+    if (!$('.mobile-menu.is-open')) {
       document.body.classList.remove('panel-open');
       setBackgroundInert(false);
     }
@@ -82,28 +85,31 @@
     }
   };
 
-  const searchPanel = $('#search-panel');
-  $('[data-search-toggle]')?.addEventListener('click', (event) => openPanel(searchPanel, event.currentTarget));
-  $('[data-search-close]')?.addEventListener('click', () => closePanel(searchPanel));
+  const openSearchWidget = () => {
+    if (config.searchEnabled === false || !window.SearchWidget?.open) return false;
+    window.SearchWidget.open();
+    return true;
+  };
+
+  $('[data-search-toggle]')?.addEventListener('click', () => openSearchWidget());
 
   const mobileMenu = $('#mobile-menu');
   $('[data-mobile-toggle]')?.addEventListener('click', (event) => openPanel(mobileMenu, event.currentTarget));
   $('[data-mobile-close]')?.addEventListener('click', () => closePanel(mobileMenu));
 
-  [searchPanel, mobileMenu].forEach((panel) => {
-    panel?.addEventListener('click', (event) => {
-      if (event.target === panel) closePanel(panel);
-    });
+  mobileMenu?.addEventListener('click', (event) => {
+    if (event.target === mobileMenu) closePanel(mobileMenu);
   });
+
+  const isTypingTarget = (element) => element?.closest?.('input, textarea, select, [contenteditable="true"]');
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape') {
-      [searchPanel, mobileMenu].forEach((panel) => closePanel(panel));
+      closePanel(mobileMenu);
       return;
     }
-    if (event.key === '/' && isEnabled('searchShortcut') && searchPanel && !activePanel && !['INPUT', 'TEXTAREA', 'SELECT'].includes(document.activeElement?.tagName)) {
-      event.preventDefault();
-      openPanel(searchPanel, $('[data-search-toggle]'));
+    if (event.key === '/' && isEnabled('searchShortcut') && !activePanel && !isTypingTarget(document.activeElement)) {
+      if (openSearchWidget()) event.preventDefault();
       return;
     }
     if (event.key !== 'Tab' || !activePanel) return;
@@ -150,8 +156,16 @@
     readingTime.textContent = `约 ${minutes} 分钟阅读`;
   }
 
-  const tocList = $('#toc-list');
-  if (postContent && tocList) {
+  const tocLists = $$('[data-toc-list]');
+  $$('[data-toc-toggle]').forEach((toggle) => {
+    toggle.addEventListener('click', () => {
+      const collapsed = toggle.getAttribute('aria-expanded') === 'true';
+      toggle.setAttribute('aria-expanded', collapsed ? 'false' : 'true');
+      toggle.closest('.post-toc')?.classList.toggle('is-collapsed', collapsed);
+    });
+  });
+
+  if (postContent && tocLists.length) {
     const headings = $$('h2, h3', postContent).filter((heading) => heading.textContent.trim());
     if (headings.length) {
       const usedIds = new Set($$('[id]').map((item) => item.id));
@@ -169,15 +183,20 @@
 
       headings.forEach((heading) => {
         if (!heading.id) heading.id = uniqueId(toSlug(heading.textContent));
-        const link = document.createElement('a');
-        link.href = '#' + encodeURIComponent(heading.id);
-        link.textContent = heading.textContent.trim();
-        link.className = 'toc-link toc-link--' + heading.tagName.toLowerCase();
-        link.dataset.targetId = heading.id;
-        tocList.appendChild(link);
       });
 
-      const tocLinks = $$('.toc-link', tocList);
+      tocLists.forEach((tocList) => {
+        headings.forEach((heading) => {
+          const link = document.createElement('a');
+          link.href = '#' + encodeURIComponent(heading.id);
+          link.textContent = heading.textContent.trim();
+          link.className = 'toc-link toc-link--' + heading.tagName.toLowerCase();
+          link.dataset.targetId = heading.id;
+          tocList.appendChild(link);
+        });
+      });
+
+      const tocLinks = $$('.toc-link');
       if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
           entries.forEach((entry) => {
@@ -190,7 +209,7 @@
         tocLinks[0]?.classList.add('is-active');
       }
     } else {
-      $('#post-toc')?.remove();
+      $$('.post-toc').forEach((toc) => toc.remove());
     }
   }
 

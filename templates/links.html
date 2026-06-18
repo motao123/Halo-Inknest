@@ -1,20 +1,29 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title='友情链接', description='朋友们的博客', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url='/links', robots=${null})}"></head>
+<head th:replace="~{modules/head :: head(title='友情链接', description='朋友们的博客', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url='/links', robots=${null}, sectionName=${null}, tagItems=${null})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
-  <th:block th:replace="~{modules/banner :: banner(title='友情链接', subtitle='朋友们的博客', image=${null})}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title='友情链接', subtitle='朋友们的博客', image=${null}, priority=${false})}"></th:block>
 
   <main class="site-main" id="site-main">
     <section class="section-links">
       <div class="container">
+        <div class="links-apply">
+          <div>
+            <p class="section-kicker">Blogroll</p>
+            <h2>也想交换友链？</h2>
+            <p>欢迎在评论区留下站点名称、地址、头像和一句简介。</p>
+          </div>
+          <a class="button button--ghost" th:if="${(theme.config.post.show_comments == null or theme.config.post.show_comments) and haloCommentEnabled and singlePage != null and singlePage.spec.allowComment}" href="#comments">申请友链</a>
+        </div>
+
         <div th:if="${singlePage != null and singlePage.content != null and singlePage.content.content != null}" class="page-content prose" th:utext="${singlePage.content.content}">页面内容</div>
 
         <th:block th:if="${linkFinder != null and linkFinder.count() > 0}">
           <div class="links-group" th:each="group : ${linkFinder.groupBy()}" th:if="${group.links != null and !#lists.isEmpty(group.links)}">
             <h2 class="links-group-title" th:text="${group.spec.displayName ?: '未分组'}">友链分组</h2>
             <div class="link-grid">
-              <a class="link-card" th:each="link : ${group.links}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:attr="aria-label=${link.spec.displayName}">
+              <a class="link-card" th:each="link : ${group.links}" th:href="${link.spec.url}" target="_blank" rel="noopener noreferrer" th:attr="aria-label=${'在新窗口打开 ' + link.spec.displayName}">
                 <div class="link-logo">
                   <img th:if="${(link.spec.logo ?: '') != ''}" th:src="${link.spec.logo}" th:alt="${link.spec.displayName}" width="44" height="44" loading="lazy" decoding="async">
                   <span class="link-initial" th:unless="${(link.spec.logo ?: '') != ''}" th:text="${link.spec.displayName != null and link.spec.displayName.length() > 0 ? #strings.substring(link.spec.displayName, 0, 1).toUpperCase() : '?'}">?</span>
@@ -32,6 +41,12 @@
           <h2>暂无友链</h2>
           <p>请在 Halo 后台安装或启用链接管理插件，并添加友链数据。</p>
         </div>
+      </div>
+    </section>
+
+    <section id="comments" th:if="${(theme.config.post.show_comments == null or theme.config.post.show_comments) and haloCommentEnabled and singlePage != null and singlePage.spec.allowComment}" class="section-comments">
+      <div class="container container--narrow">
+        <halo:comment group="content.halo.run" kind="SinglePage" th:attr="name=${singlePage.metadata.name}" />
       </div>
     </section>
   </main>

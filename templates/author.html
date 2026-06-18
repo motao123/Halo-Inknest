@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title=${author.spec.displayName}, description=${author.spec.bio}, type='website', image=${author.spec.avatar}, publishedTime=${null}, modifiedTime=${null}, authorName=${author.spec.displayName}, url=${null}, robots=${null})}"></head>
+<head th:replace="~{modules/head :: head(title=${author.spec.displayName}, description=${author.spec.bio}, type='website', image=${author.spec.avatar}, publishedTime=${null}, modifiedTime=${null}, authorName=${author.spec.displayName}, url=${null}, robots=${null}, sectionName=${null}, tagItems=${null})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
-  <th:block th:replace="~{modules/banner :: banner(title=${author.spec.displayName}, subtitle=${author.spec.bio}, image=${null})}"></th:block>
+  <th:block th:replace="~{modules/banner :: banner(title=${author.spec.displayName}, subtitle=${author.spec.bio}, image=${null}, priority=${false})}"></th:block>
 
   <main class="site-main" id="site-main">
     <section class="section-posts">

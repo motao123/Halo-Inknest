@@ -14,7 +14,7 @@ spec:
   homepage: "https://github.com/motao123/Halo-Inknest"
   repo: "https://github.com/motao123/Halo-Inknest"
   issues: "https://github.com/motao123/Halo-Inknest/issues"
-  version: 1.0.9
+  version: 1.0.0
   requires: ">=2.25.0"
   settingName: theme-inknest-setting
   configMapName: theme-inknest-configmap

@@ -14,7 +14,7 @@
       </nav>
 
       <div class="header-actions">
-        <button th:if="${theme.config.navigation.show_search == null or theme.config.navigation.show_search}" class="icon-button" type="button" data-search-toggle aria-controls="search-panel" aria-expanded="false" aria-label="打开搜索">搜索</button>
+        <button th:if="${(theme.config.navigation.show_search == null or theme.config.navigation.show_search) and pluginFinder.available('PluginSearchWidget')}" class="icon-button" type="button" data-search-toggle aria-label="打开搜索">搜索</button>
         <button th:if="${theme.config.navigation.show_mobile_menu == null or theme.config.navigation.show_mobile_menu}" class="icon-button mobile-menu-button" type="button" data-mobile-toggle aria-controls="mobile-menu" aria-expanded="false" aria-label="打开菜单">菜单</button>
       </div>
     </div>

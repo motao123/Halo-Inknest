@@ -6,7 +6,7 @@ data:
   basic: |
     {"site_logo":"","footer_logo":"","site_description":"把灵感安放在文字的巢里","favicon":"","global_banner":"/themes/theme-inknest/assets/images/default-banner.png"}
   navigation: |
-    {"show_search":true,"show_mobile_menu":true,"search_action":"/search","search_param":"keyword","search_hint":"","search_placeholder":"输入关键词...","enable_search_shortcut":true}
+    {"show_search":true,"show_mobile_menu":true,"enable_search_shortcut":true}
   post: |
     {"excerpt_length":120,"list_style":"date","show_category":true,"show_tags":true,"show_visit_count":true,"show_reading_time":true,"show_toc":true,"show_share":true,"show_author_box":true,"show_copyright":true,"copyright_text":"除特别注明外，本站文章采用 CC BY-NC-SA 4.0 协议。转载请注明出处。","show_prev_next":true,"show_comments":true}
   social: |

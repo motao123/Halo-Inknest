@@ -20,7 +20,7 @@
         <span class="post-category" th:if="${(theme.config.post.show_category == null or theme.config.post.show_category) and post.categories != null and !#lists.isEmpty(post.categories)}">
           <a th:href="@{${post.categories[0].status.permalink}}" th:text="${post.categories[0].spec.displayName}">分类</a>
         </span>
-        <time class="post-mobile-date" th:if="${post.spec.publishTime != null}" th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}" th:text="${#temporals.format(post.spec.publishTime, 'yyyy年MM月dd日')}">2026年06月18日</time>
+        <time class="post-mobile-date" th:if="${showCover and hasCover and post.spec.publishTime != null}" th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}" th:text="${#temporals.format(post.spec.publishTime, 'yyyy年MM月dd日')}">2026年06月18日</time>
         <span th:if="${(theme.config.post.show_visit_count == null or theme.config.post.show_visit_count) and post.stats != null}">浏览 <span th:text="${post.stats.visit}">0</span></span>
       </div>
       <p class="post-excerpt" th:with="excerpt=${post.status.excerpt ?: ''}, excerptLength=${theme.config.post.excerpt_length ?: 120}" th:text="${excerpt != '' ? (excerpt.length() > excerptLength ? excerpt.substring(0, excerptLength) + '…' : excerpt) : '这篇文章还没有摘要。'}">文章摘要</p>
