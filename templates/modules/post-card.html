@@ -1,11 +1,14 @@
 <th:block th:fragment="post-card(post)">
-  <article class="post-card post-card--classic post">
-    <div class="post-time-img no-thumbnail">
-      <div class="post-date" th:if="${post.spec.publishTime != null}">
+  <article class="post-card post-card--classic post" th:with="listStyle=${theme.config.post.list_style ?: 'date'}, hasCover=${(post.spec.cover ?: '') != ''}, showCover=${listStyle == 'cover' or (listStyle == 'auto' and hasCover)}">
+    <div th:class="${showCover and hasCover ? 'post-time-img has-thumbnail' : 'post-time-img no-thumbnail'}">
+      <a th:if="${showCover and hasCover}" class="post-thumbnail" th:href="@{${post.status.permalink}}" aria-hidden="true" tabindex="-1">
+        <img th:src="@{${post.spec.cover}}" th:alt="${post.spec.title}" loading="lazy" decoding="async">
+      </a>
+      <div class="post-date" th:if="${!(showCover and hasCover) and post.spec.publishTime != null}">
         <span th:text="${#temporals.format(post.spec.publishTime, 'dd')}">18</span>
         <small th:text="${#temporals.format(post.spec.publishTime, 'yyyy年MM月')}">2026年06月</small>
       </div>
-      <div class="post-date" th:unless="${post.spec.publishTime != null}">
+      <div class="post-date" th:if="${!(showCover and hasCover) and post.spec.publishTime == null}">
         <span>--</span>
         <small>未发布</small>
       </div>

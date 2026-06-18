@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title='友情链接', description='朋友们的博客')}"></head>
+<head th:replace="~{modules/head :: head(title='友情链接', description='朋友们的博客', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url='/links')}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <th:block th:replace="~{modules/banner :: banner(title='友情链接', subtitle='朋友们的博客', image=${null})}"></th:block>

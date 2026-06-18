@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title=${post.spec.title}, description=${post.status.excerpt})}"></head>
+<head th:replace="~{modules/head :: head(title=${post.spec.title}, description=${post.status.excerpt}, type='article', image=${post.spec.cover}, publishedTime=${post.spec.publishTime}, modifiedTime=${null}, authorName=${null}, url=${post.status.permalink})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <div th:if="${theme.config.features.enable_reading_progress == null or theme.config.features.enable_reading_progress}" class="reading-progress" id="reading-progress"></div>
@@ -9,6 +9,7 @@
   <main class="site-main">
     <article class="post-single">
       <div class="container container--narrow">
+        <th:block th:replace="~{modules/breadcrumbs :: breadcrumbs(current=${post.spec.title}, parentName=${post.categories != null and !post.categories.isEmpty() ? post.categories[0].spec.displayName : '文章'}, parentUrl=${post.categories != null and !post.categories.isEmpty() ? post.categories[0].status.permalink : '/archives'})}"></th:block>
         <div class="content-shell post-content-shell">
           <header class="post-header">
             <div class="post-meta post-meta--single">
@@ -30,9 +31,26 @@
             <a th:each="tag : ${post.tags}" th:href="@{${tag.status.permalink}}" th:text="|#${tag.spec.displayName}|">#标签</a>
           </div>
 
+          <div class="post-author-box" th:if="${theme.config.post.show_author_box == null or theme.config.post.show_author_box}">
+            <div class="post-author-avatar" th:text="${site.title != null and site.title.length() > 0 ? #strings.substring(site.title, 0, 1).toUpperCase() : 'I'}">I</div>
+            <div>
+              <strong th:text="${site.title}">InkNest</strong>
+              <p th:text="${theme.config.basic.site_description ?: site.subtitle}">把灵感安放在文字的巢里</p>
+            </div>
+          </div>
+
+          <div class="post-copyright" th:if="${theme.config.post.show_copyright == null or theme.config.post.show_copyright}">
+            <strong>转载说明</strong>
+            <p th:text="${theme.config.post.copyright_text ?: '除特别注明外，本站文章采用 CC BY-NC-SA 4.0 协议。转载请注明出处。'}">除特别注明外，本站文章采用 CC BY-NC-SA 4.0 协议。转载请注明出处。</p>
+          </div>
+
           <div class="share-box" th:if="${theme.config.post.show_share == null or theme.config.post.show_share}">
             <span>分享这篇文章</span>
-            <button type="button" data-share-current>复制链接</button>
+            <div class="share-actions">
+              <button type="button" data-share-native th:attr="data-share-title=${post.spec.title}">系统分享</button>
+              <button type="button" data-share-markdown th:attr="data-share-title=${post.spec.title}">复制 Markdown</button>
+              <button type="button" data-share-current>复制链接</button>
+            </div>
           </div>
 
           <nav class="post-nav" th:if="${theme.config.post.show_prev_next == null or theme.config.post.show_prev_next}" th:with="postCursor=${postFinder.cursor(post.metadata.name)}" th:remove="${postCursor.hasPrevious() or postCursor.hasNext()} ? 'none' : 'all'" aria-label="文章导航">

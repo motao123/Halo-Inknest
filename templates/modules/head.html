@@ -1,4 +1,4 @@
-<head th:fragment="head(title, description)">
+<head th:fragment="head(title, description, type, image, publishedTime, modifiedTime, authorName, url)">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +7,32 @@
   <link rel="icon" th:if="${theme.config.basic.favicon != null and theme.config.basic.favicon != ''}" th:href="@{${theme.config.basic.favicon}}">
   <meta name="theme-color" content="#a8693d">
   <meta property="og:site_name" th:content="${site.title}">
-  <meta property="og:type" content="website">
+  <meta property="og:type" th:content="${type != null and type != '' ? type : 'website'}">
   <meta property="og:title" th:content="${title != null and title != '' ? title + ' - ' + site.title : site.title}">
   <meta property="og:description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
-  <meta property="og:image" th:content="@{${(theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png'}}">
+  <meta property="og:image" th:content="@{${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}}">
+  <meta th:if="${(url ?: '') != ''}" property="og:url" th:content="@{${url}}">
+  <meta th:if="${publishedTime != null}" property="article:published_time" th:content="${publishedTime}">
+  <meta th:if="${modifiedTime != null}" property="article:modified_time" th:content="${modifiedTime}">
+  <meta th:if="${(authorName ?: '') != ''}" property="article:author" th:content="${authorName}">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" th:content="${title != null and title != '' ? title + ' - ' + site.title : site.title}">
   <meta name="twitter:description" th:content="${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}">
+  <meta name="twitter:image" th:content="@{${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}}">
+  <link th:if="${(url ?: '') != ''}" rel="canonical" th:href="@{${url}}">
   <link rel="alternate" type="application/rss+xml" title="RSS" th:href="@{/feed.xml}">
+  <script type="application/ld+json" th:inline="javascript">
+    {
+      "@context": "https://schema.org",
+      "@type": /*[[${type == 'article' ? 'BlogPosting' : 'WebSite'}]]*/ "WebSite",
+      "headline": /*[[${title != null and title != '' ? title : site.title}]]*/ "InkNest",
+      "description": /*[[${description != null and description != '' ? description : (theme.config.basic.site_description ?: site.subtitle)}]]*/ "",
+      "url": /*[[@{${url ?: '/'}}]]*/ "",
+      "image": /*[[@{${(image ?: '') != '' ? image : ((theme.config.basic.global_banner ?: '') != '' ? theme.config.basic.global_banner : '/themes/theme-inknest/assets/images/default-banner.png')}}]]*/ "",
+      "author": {"@type": "Person", "name": /*[[${(authorName ?: '') != '' ? authorName : site.title}]]*/ ""},
+      "publisher": {"@type": "Organization", "name": /*[[${site.title}]]*/ ""}
+    }
+  </script>
   <link rel="stylesheet" th:href="@{/assets/css/style.css(v=${theme.spec.version})}">
   <halo:head />
   <th:block th:utext="${theme.config.custom_code.custom_head}"></th:block>

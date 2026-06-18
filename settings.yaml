@@ -57,6 +57,10 @@ spec:
           name: search_hint
           label: 搜索提示文案
           value: "如果当前 Halo 环境未启用搜索能力，请在后台安装或启用搜索相关插件。"
+        - $formkit: text
+          name: search_placeholder
+          label: 搜索框占位文案
+          value: "输入关键词..."
         - $formkit: checkbox
           name: enable_search_shortcut
           label: 启用 / 快捷键打开搜索
@@ -70,6 +74,17 @@ spec:
           label: 摘要字数
           value: 120
           validation: "min:20|max:300"
+        - $formkit: select
+          name: list_style
+          label: 文章列表左侧样式
+          value: date
+          options:
+            - label: 日期块
+              value: date
+            - label: 封面图
+              value: cover
+            - label: 有封面时显示封面
+              value: auto
         - $formkit: checkbox
           name: show_category
           label: 显示分类
@@ -94,6 +109,18 @@ spec:
           name: show_share
           label: 显示分享按钮
           value: true
+        - $formkit: checkbox
+          name: show_author_box
+          label: 显示作者信息框
+          value: true
+        - $formkit: checkbox
+          name: show_copyright
+          label: 显示转载说明
+          value: true
+        - $formkit: textarea
+          name: copyright_text
+          label: 转载说明文案
+          value: "除特别注明外，本站文章采用 CC BY-NC-SA 4.0 协议。转载请注明出处。"
         - $formkit: checkbox
           name: show_prev_next
           label: 显示上一篇 / 下一篇

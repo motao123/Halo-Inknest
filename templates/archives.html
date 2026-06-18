@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title='文章归档', description='按时间浏览所有文章')}"></head>
+<head th:replace="~{modules/head :: head(title='文章归档', description='按时间浏览所有文章', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url='/archives')}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <th:block th:replace="~{modules/banner :: banner(title='文章归档', subtitle='按时间收藏每一次表达', image=${null})}"></th:block>
@@ -16,7 +16,7 @@
                 <div class="archive-month-group">
                   <h3 th:text="${month.month} + ' 月'">6 月</h3>
                   <a class="archive-item" th:each="post : ${month.posts}" th:href="@{${post.status.permalink}}">
-                    <time th:if="${post.spec.publishTime != null}" th:text="${#temporals.format(post.spec.publishTime, 'MM-dd')}">06-18</time>
+                    <time th:if="${post.spec.publishTime != null}" th:datetime="${#temporals.format(post.spec.publishTime, 'yyyy-MM-dd')}" th:text="${#temporals.format(post.spec.publishTime, 'MM-dd')}">06-18</time>
                     <span th:text="${post.spec.title}">文章标题</span>
                   </a>
                 </div>

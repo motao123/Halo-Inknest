@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title='页面不存在', description='你访问的页面不存在')}"></head>
+<head th:replace="~{modules/head :: head(title='页面不存在', description='你访问的页面不存在', type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url=${null})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <main class="site-main error-main">

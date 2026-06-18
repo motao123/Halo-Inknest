@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN" xmlns:th="https://www.thymeleaf.org">
-<head th:replace="~{modules/head :: head(title=${tag.spec.displayName}, description=${'#' + tag.spec.displayName})}"></head>
+<head th:replace="~{modules/head :: head(title=${tag.spec.displayName}, description=${'#' + tag.spec.displayName}, type='website', image=${theme.config.basic.global_banner}, publishedTime=${null}, modifiedTime=${null}, authorName=${null}, url=${tag.status.permalink})}"></head>
 <body>
   <th:block th:replace="~{modules/header :: header}"></th:block>
   <th:block th:replace="~{modules/banner :: banner(title=${'#' + tag.spec.displayName}, subtitle='同一标签下的所有文章', image=${null})}"></th:block>

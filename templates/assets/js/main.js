@@ -222,28 +222,59 @@
     });
   }
 
-  $('[data-share-current]')?.addEventListener('click', async (event) => {
-    const button = event.currentTarget;
+  const copyText = async (button, text, successText, defaultText) => {
     try {
-      await navigator.clipboard.writeText(window.location.href);
-      button.textContent = '链接已复制';
-      setTimeout(() => { button.textContent = '复制链接'; }, 1600);
+      await navigator.clipboard.writeText(text);
+      button.textContent = successText;
     } catch (error) {
       button.textContent = '复制失败';
-      setTimeout(() => { button.textContent = '复制链接'; }, 1600);
     }
+    setTimeout(() => { button.textContent = defaultText; }, 1600);
+  };
+
+  $('[data-share-current]')?.addEventListener('click', (event) => {
+    copyText(event.currentTarget, window.location.href, '链接已复制', '复制链接');
+  });
+
+  $('[data-share-markdown]')?.addEventListener('click', (event) => {
+    const button = event.currentTarget;
+    const title = button.dataset.shareTitle || document.title;
+    copyText(button, `[${title}](${window.location.href})`, 'Markdown 已复制', '复制 Markdown');
+  });
+
+  $('[data-share-native]')?.addEventListener('click', async (event) => {
+    const button = event.currentTarget;
+    const title = button.dataset.shareTitle || document.title;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title, url: window.location.href });
+      } catch (error) {
+        if (error?.name !== 'AbortError') button.textContent = '分享失败';
+      }
+      setTimeout(() => { button.textContent = '系统分享'; }, 1600);
+      return;
+    }
+    copyText(button, window.location.href, '链接已复制', '系统分享');
   });
 
   const proseImages = $$('.prose img');
-  if (isEnabled('fancybox') && proseImages.length && config.fancyboxCss && config.fancyboxJs) {
-    const stylesheet = document.createElement('link');
-    stylesheet.rel = 'stylesheet';
-    stylesheet.href = config.fancyboxCss;
-    document.head.appendChild(stylesheet);
+  if (isEnabled('fancybox') && proseImages.length && config.fancyboxCss && config.fancyboxJs && !window.__InkNestFancyboxLoading) {
+    window.__InkNestFancyboxLoading = true;
+    if (!$(`link[href="${config.fancyboxCss}"]`)) {
+      const stylesheet = document.createElement('link');
+      stylesheet.rel = 'stylesheet';
+      stylesheet.href = config.fancyboxCss;
+      document.head.appendChild(stylesheet);
+    }
 
-    const script = document.createElement('script');
-    script.src = config.fancyboxJs;
-    script.onload = () => window.Fancybox?.bind('.prose img', {});
-    document.body.appendChild(script);
+    if (window.Fancybox) {
+      window.Fancybox.bind('.prose img', {});
+    } else {
+      const script = document.createElement('script');
+      script.src = config.fancyboxJs;
+      script.onload = () => window.Fancybox?.bind('.prose img', {});
+      script.onerror = () => { window.__InkNestFancyboxLoading = false; };
+      document.body.appendChild(script);
+    }
   }
 })();

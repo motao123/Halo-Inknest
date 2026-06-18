@@ -1,0 +1,10 @@
+<th:block th:fragment="breadcrumbs(current, parentName, parentUrl)">
+  <nav class="breadcrumbs" aria-label="面包屑导航">
+    <a th:href="@{/}">首页</a>
+    <span th:if="${(parentName ?: '') != ''}" aria-hidden="true">/</span>
+    <a th:if="${(parentName ?: '') != '' and (parentUrl ?: '') != ''}" th:href="@{${parentUrl}}" th:text="${parentName}">上级</a>
+    <span th:if="${(parentName ?: '') != '' and (parentUrl ?: '') == ''}" th:text="${parentName}">上级</span>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page" th:text="${current}">当前页面</span>
+  </nav>
+</th:block>
