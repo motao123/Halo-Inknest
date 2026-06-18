@@ -266,16 +266,16 @@ button, input { font: inherit; }
 .links-group { margin-bottom: 24px; overflow: hidden; }
 .links-group-title { position: relative; padding-left: 16px; }
 .links-group-title::before { content: ''; position: absolute; left: 0; top: 50%; width: 5px; height: 24px; border-radius: 999px; background: var(--color-primary); transform: translateY(-50%); }
-.link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.link-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: 14px; align-items: stretch; }
 .link-card {
   position: relative;
   display: flex;
   align-items: center;
   gap: 12px;
-  min-height: 76px;
-  padding: 14px 16px;
+  height: 82px;
+  padding: 14px 38px 14px 16px;
   border-radius: 18px;
-  background: rgba(255, 252, 246, 0.9);
+  background: rgba(255, 252, 246, 0.92);
   border: 1px solid rgba(138, 90, 43, 0.13);
   box-shadow: 0 8px 20px rgba(95, 61, 31, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -346,11 +346,22 @@ body.panel-open { overflow: hidden; }
 .footer-brand h2 { margin: 10px 0 6px; font-family: var(--font-serif); }
 .footer-brand p { margin: 0; color: #cdbda9; }
 .footer-links, .footer-social { display: grid; align-content: start; gap: 8px; }
-.footer-friend-links { min-width: min(100%, 520px); }
+.footer-friend-links { min-width: min(100%, 560px); }
 .footer-links h3, .footer-social h3 { margin: 0 0 6px; }
-.footer-link-row { display: flex; flex-wrap: wrap; gap: 8px 14px; align-items: center; }
-.footer-link-row a { color: #eadbcc; white-space: nowrap; }
-.footer-link-row a:hover { color: #fff; }
+.footer-link-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.footer-link-row a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 30px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  color: #eadbcc;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  white-space: nowrap;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.footer-link-row a:hover { color: #fff; background: rgba(255,255,255,0.14); transform: translateY(-1px); }
 .social-links { display: flex; flex-wrap: wrap; gap: 8px; }
 .social-link {
   width: 36px;
