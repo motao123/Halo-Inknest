@@ -16,8 +16,8 @@ spec:
   issues: "https://github.com/motao123/Halo-Inknest/issues"
   version: 1.0.2
   requires: ">=2.25.0"
-  settingName: theme-inknest-setting-v3
-  configMapName: theme-inknest-configmap-v3
+  settingName: theme-inknest-setting
+  configMapName: theme-inknest-configmap
   customTemplates:
     page:
       - name: 默认

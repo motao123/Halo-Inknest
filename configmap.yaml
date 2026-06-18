@@ -1,7 +1,7 @@
 apiVersion: theme.halo.run/v1alpha1
 kind: ConfigMap
 metadata:
-  name: theme-inknest-configmap-v3
+  name: theme-inknest-configmap
 data:
   basic: |
     {"site_logo":"","footer_logo":"","site_description":"把灵感安放在文字的巢里","favicon":"","global_banner":"/themes/theme-inknest/assets/images/screenshot.png"}

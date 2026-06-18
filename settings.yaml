@@ -1,7 +1,7 @@
 apiVersion: v1alpha1
 kind: Setting
 metadata:
-  name: theme-inknest-setting-v3
+  name: theme-inknest-setting
 spec:
   forms:
     - group: basic
